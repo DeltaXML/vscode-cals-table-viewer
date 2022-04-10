@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_th2_c5w_sjb">
+    <title>Examples</title>
+    <!-- See our web page https://docs.deltaxml.com/support/latest/documentation/comparing-document-tables-cals-or-html for illustrations -->
+    <body>
+        <section>
+            <title>Replace this with processor setup details</title>
+            <p>
+                <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+                    <title>Example 1: Content only changed</title>
+                    <!-- The A table is the basic starter version -->
+                    <tgroup cols="3">
+                        <tbody>
+                            <row><entry>a</entry><entry>b</entry><entry>c</entry></row>
+                            <row><entry>a3</entry><entry>b3</entry><entry>c3</entry></row>
+                            <row><entry>a2.2</entry><entry>b2.2</entry><entry>c2.2</entry></row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+        </section>
+    </body>
+</topic>

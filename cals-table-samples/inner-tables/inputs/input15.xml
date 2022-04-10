@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_th2_c5w_sjb">
+  <title>Examples</title>
+  <!-- See our web page https://docs.deltaxml.com/support/latest/documentation/comparing-document-tables-cals-or-html for illustrations -->
+  <body>
+    <section>
+      <title>Replace this with processor setup details</title>
+      <p>
+        <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+          <title>Example 1: Content only changed</title>
+          <!-- The A table is the basic starter version -->
+          <tgroup cols="4">
+            <colspec colname="c1" colnum="1" colwidth="28.15pt"/>
+            <colspec colname="c2" colnum="2" colwidth="41.89pt"/>
+            <colspec colname="c3" colnum="3" colwidth="87.71pt"/>
+            <colspec colname="c4" colnum="4" colwidth="65.45pt"/>
+            <thead>
+              <row>
+                <entry>Supplier</entry>
+                <entry>Fruit</entry>
+                <entry>Ref</entry>
+                <entry>Depot</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>OrangesRus</entry>
+                <entry>Orange</entry>
+                <entry>12-89763-1</entry>
+                <entry>Seville</entry>
+              </row>
+              <row>
+                <entry>PearPackers</entry>
+                <entrytbl cols="3" namest="c2" nameend="c4" morerows="1">
+                  <tbody>
+                    <row>
+                        <entry  align="left" valign="top">Australia</entry>
+                        <entry align="center">Packham</entry>
+                      <entry align="right">Eating</entry>
+                    </row>
+                    <row>
+                      <entry  align="left" valign="top" morerows="1">UK</entry>
+                      <entry align="center">Conference</entry>
+                      <entry align="right">Eating</entry>
+                    </row>
+                    <row>
+                      <entry align="center">Black Worcester</entry>
+                      <entry align="right">Cooking</entry>
+                    </row>
+                    <row>
+                      <entry align="left" valign="top">Portugal</entry>
+                      <entry align="center">Rocha</entry>
+                      <entry align="right">Eating</entry>
+                    </row>
+                    <row>
+                      <entry align="left" valign="top">France</entry>
+                      <entry align="center">Claude Blanchet</entry>
+                      <entry align="right">Varies</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+              <row>
+                <entry>KiwisKiwis</entry>
+              </row>
+              <row>
+                <entry>Adams</entry>
+                <entry>Apple</entry>
+                <entry>99999</entry>
+                <entry>Worcester</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </p>
+    </section>
+  </body>
+</topic>

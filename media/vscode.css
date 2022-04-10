@@ -1,0 +1,235 @@
+:root {
+	--container-padding: 20px;
+	--input-padding-vertical: 6px;
+	--input-padding-horizontal: 4px;
+	--input-margin-vertical: 4px;
+	--input-margin-horizontal: 0;
+}
+
+body {
+	padding: 0 var(--container-padding);
+	color: var(--vscode-foreground);
+	font-size: var(--vscode-font-size);
+	font-weight: var(--vscode-font-weight);
+	font-family: var(--vscode-font-family);
+	/* background-color: var(--vscode-editor-background); */
+	background-color: white;
+}
+
+ol,
+ul {
+	padding-left: var(--container-padding);
+}
+
+body > *,
+form > * {
+	margin-block-start: var(--input-margin-vertical);
+	margin-block-end: var(--input-margin-vertical);
+}
+
+*:focus {
+	outline-color: var(--vscode-focusBorder) !important;
+}
+
+a {
+	color: var(--vscode-textLink-foreground);
+}
+
+a:hover,
+a:active {
+	color: var(--vscode-textLink-activeForeground);
+}
+
+code {
+	font-size: var(--vscode-editor-font-size);
+	font-family: var(--vscode-editor-font-family);
+}
+
+button {
+	border: none;
+	padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+	width: 100%;
+	text-align: center;
+	outline: 1px solid transparent;
+	outline-offset: 2px !important;
+	color: var(--vscode-button-foreground);
+	background: var(--vscode-button-background);
+}
+
+button:hover {
+	cursor: pointer;
+	background: var(--vscode-button-hoverBackground);
+}
+
+button:focus {
+	outline-color: var(--vscode-focusBorder);
+}
+
+button.secondary {
+	color: var(--vscode-button-secondaryForeground);
+	background: var(--vscode-button-secondaryBackground);
+}
+
+button.secondary:hover {
+	background: var(--vscode-button-secondaryHoverBackground);
+}
+
+input:not([type='checkbox']),
+textarea {
+	display: block;
+	width: 100%;
+	border: none;
+	font-family: var(--vscode-font-family);
+	padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+	color: var(--vscode-input-foreground);
+	outline-color: var(--vscode-input-border);
+	background-color: var(--vscode-input-background);
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--vscode-input-placeholderForeground);
+}
+
+/* CALS Tables: */
+thead,
+tfoot {
+    background-color: #eaeaea;
+    color: black;
+}
+
+* {
+  color: #505050;
+}
+
+thead td, tfoot td {
+  color: black;
+}
+
+tbody {
+    background-color: white;
+}
+
+caption {
+    padding: 10px;
+    caption-side: top;
+    color: black;
+}
+
+span.id, span.idRef {
+  font-weight: bold;
+  background-color: lightblue;
+  display: block;
+  border: 1px solid blue ;
+}
+
+span.idIdRef {
+  font-weight: bold;
+  background-color: lightgoldenrodyellow;
+  display: block;
+  border: 1px solid orange ;
+}
+
+*[data-from] {
+  border-style: solid;
+  border-color: purple;
+  border-width: 1px;
+  display: inline-block;
+  margin: 1px;
+  padding: 1px;
+}
+
+span.deltaV2B.idRef, span.deltaV2B.id {
+  font-weight: bold;
+  background-color: lightgreen;
+  display: block;
+  border: 1px solid green ;
+}
+
+span.deltaV2A.idRef, span.deltaV2A.id {
+  font-weight: bold;
+  background-color: lightpink;
+  display: block;
+  border: 1px solid red ;
+}
+
+* {
+  letter-spacing: 1px;
+  font-family: sans-serif;
+}
+
+/*  This is the standard table formatting css  */
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .8rem;
+    width: 450px;
+    margin-bottom: 25px;
+    margin-left: 50px;
+}
+
+*[data-id] {
+  background-color: yellowgreen;
+}
+
+*[data-idRef] {
+  background-color: yellow;
+}
+
+*.deltaV2B {
+  background-color: #cafaca
+}
+*.deltaV2A {
+  background-color: #facaca
+}
+
+*[data-padding-cell=true] {
+  background-color: lightgrey;
+}
+
+*[data-missing-cell=true] {
+  background-color: darkgrey;
+}
+
+thead.deltaV2B, 
+thead td.deltaV2B,
+tfoot.deltaV2B,
+tfoot td.deltaV2B {
+  background-color: #aadaaa
+}
+
+thead.deltaV2A, 
+thead td.deltaV2A,
+tfoot.deltaV2A,
+tfoot td.deltaV2A {
+  background-color: #daaaaa
+}
+
+td,
+th {
+    border: 1px solid rgb(100, 100, 100);
+    padding: 5px 10px;
+}
+
+td {
+    text-align: center;
+}
+
+p.headerText {
+  margin: 0;
+  color: #8080fa;
+}
+
+table.deltaV2A,choicetable.deltaV2A {
+  border-style: dashed;
+  border-collapse: separate;
+  border-color: red;
+}
+
+section {
+  margin: 10px 10px 10px 10px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  border-color: #8080fa;
+}

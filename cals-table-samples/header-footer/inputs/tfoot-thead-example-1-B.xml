@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<topic xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+    <info>
+        <title>A Docbook header and footer test</title>
+    </info>
+    <para>
+        <table frame="all" rowsep="1" colsep="1" >
+            <info>
+                <title>Docbook test with header and footer and colspecs</title>
+            </info>
+            <tgroup cols="6">
+                <colspec colname="c1" colnum="1" align="left"/>
+                <colspec colname="c2" colnum="2" align="left"/>
+                <colspec colname="c3" colnum="3" align="left"/>
+                <colspec colname="c4" colnum="4" align="left"/>
+                <colspec colname="c4-2" colnum="5" align="left"/>
+                <colspec colname="c5" colnum="6" align="left"/>
+                <thead>
+                    <colspec colname="c1" colnum="1" align="center"/>
+                    <colspec colname="c2" colnum="2" align="center"/>
+                    <colspec colname="c3" colnum="3" align="center"/>
+                    <colspec colname="c4" colnum="4" align="center"/>
+                    <colspec colname="c4-2" colnum="5" align="center"/>
+                    <colspec colname="c5" colnum="6" align="center"/>
+                    <row>
+                        <entry morerows="1">Name</entry>
+                        <entry morerows="1">Date</entry>
+                        <entry namest="c3" nameend="c5">Contacts</entry>
+                    </row>
+                    <row>
+                        <entry>Email1*</entry>
+                        <entry>Email2*</entry>
+                        <entry>Email3*</entry>
+                        <entry>Telephone</entry>
+                    </row>
+                </thead>
+                <tfoot>
+                    <colspec colname="bfc1" colnum="1" align="right"/>
+                    <colspec colname="bfc2" colnum="2" align="right"/>
+                    <colspec colname="bfc3" colnum="3" align="right"/>
+                    <colspec colname="bfc4" colnum="4" align="right"/>
+                    <colspec colname="bfc4-2" colnum="5" align="right"/>
+                    <colspec colname="bfc5" colnum="6" align="right"/>
+                    <row>
+                        <entry>* Only first names supplied</entry>
+                        <entry>* Of birth</entry>
+                        <entry namest="bfc3" nameend="bfc5">*Where both are present email1 should be
+                            home, email2 should be work, email3 will always be a next of kin</entry>
+                    </row>
+                </tfoot>
+                <tbody>
+                    <row>
+                        <entry>Anna</entry>
+                        <entry>01/01/2001</entry>
+                        <entry>anna@gmail.com</entry>
+                        <entry/>
+                        <entry>dad@gmail.com</entry>
+                        <entry>01234</entry>
+                    </row>
+                    <row>
+                        <entry>Bert</entry>
+                        <entry>02/02/2001</entry>
+                        <entry>bert@gmail.com</entry>
+                        <entry>berk@work.nowhere</entry>
+                        <entry>mum@gmail.com</entry>
+                        <entry>01234</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </para>
+</topic>

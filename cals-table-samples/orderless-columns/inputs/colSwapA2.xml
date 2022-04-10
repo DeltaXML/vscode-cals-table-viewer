@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_th2_c5w_sjb">
+  <title>Examples</title>
+  <!-- See our web page https://docs.deltaxml.com/support/latest/documentation/comparing-document-tables-cals-or-html for illustrations -->
+  <body>
+    <section>
+      <title>Replace this with processor setup details</title>
+      <p>
+        <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+          <title>Example 1: Content only changed</title>
+          <!-- The A table is the basic starter version -->
+          <tgroup cols="7">
+            <colspec colname="c1" colnum="1" colwidth="28.15pt"/>
+            <colspec colname="c2" colnum="2" colwidth="41.89pt"/>
+            <colspec colname="c3" colnum="3" colwidth="87.71pt"/>
+            <colspec colname="c4" colnum="4" colwidth="65.45pt"/>
+            <colspec colname="newCol5" colnum="5" colwidth="1*"/>
+            <colspec colname="newCol6" colnum="6" colwidth="1*"/>
+            <colspec colname="newCol7" colnum="7" colwidth="1*"/>
+            <thead>
+              <row>
+                <entry>Col1</entry>
+                <entry>Col2</entry>
+                <entry>Col3</entry>
+                <entry>Col4</entry>
+                <entry>Col5</entry>
+                <entry>Col6</entry>
+                <entry>Col7</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry namest="c1" nameend="c2">apple</entry>
+                <entry>3</entry>
+                <entry>4</entry>
+                <entry>5</entry>
+                <entry>6</entry>
+                <entry>7</entry>
+              </row>
+              <row>
+                <entry namest="c1" nameend="c3">pear</entry>
+                <entry>4</entry>
+                <entry>5</entry>
+                <entry>6</entry>
+                <entry>7</entry>
+              </row>
+              <row>
+                <entry namest="c1" nameend="newCol5">banana</entry>
+                <entry>6</entry>
+                <entry>7</entry>
+              </row>
+              <row>
+                <entry>1</entry>
+                <entry namest="c2" nameend="newCol5">peach</entry>
+                <entry>6</entry>
+                <entry>7</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </p>
+    </section>
+  </body>
+</topic>

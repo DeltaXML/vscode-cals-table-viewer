@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_th2_c5w_sjb">
+  <title>Examples</title>
+  <!-- See our web page https://docs.deltaxml.com/support/latest/documentation/comparing-document-tables-cals-or-html for illustrations -->
+  <body>
+    <section>
+      <title>Replace this with processor setup details</title>
+      <p>
+        <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+          <title>Invalid row[2] - insufficent cells</title>
+          <tgroup cols="3">
+            <colspec colname="a"/> 
+            <colspec colname="b"/>
+            <colspec colname="c"/>
+            <tbody>
+              <row><entry>a1</entry><entry>b1</entry><entry>c1</entry></row>
+              <row><entry>a2</entry><entry>b2</entry></row>
+            </tbody>
+          </tgroup>
+        </table>
+      </p>
+    </section>
+  </body>
+</topic>

@@ -1,0 +1,49 @@
+{
+  "name": "cals-table-viewer",
+  "displayName": "CALS Table Viewer",
+  "description": "Render CALS tables found in the current file",
+  "version": "0.0.1",
+  "publisher": "DeltaXML Internal",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/vscode-extension-samples"
+  },
+  "engines": {
+    "vscode": "^1.47.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:calsViewer.start",
+    "onWebviewPanel:calsViewer"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "calsViewer.start",
+        "title": "Start CALS table viewer",
+        "category": "CALS Viewer"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint . --ext .ts,.tsx",
+    "watch": "tsc -w -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.0",
+    "@types/vscode": "^1.47.0",
+    "@types/vscode-webview": "^1.57.0",
+    "@typescript-eslint/eslint-plugin": "^4.16.0",
+    "@typescript-eslint/parser": "^4.16.0",
+    "eslint": "^7.21.0",
+    "saxon-js": "^2.3.0",
+    "typescript": "^4.5.5"
+  }
+}

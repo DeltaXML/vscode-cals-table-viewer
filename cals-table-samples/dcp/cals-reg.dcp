@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentComparator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:noNamespaceSchemaLocation="../dcp/core-dcp-v1_0.xsd" id="cals-reg" description="cals regularise tests">
+  <!-- 
+       for schema v1.1 validation of this file, change xsi:noNamespaceSchemaLocation above to:
+       xsi:noNamespaceSchemaLocation="core-dcp-v1_0-schema1_1.xsd"
+  -->
+  <fullDescription> CALS Table Regularise Test </fullDescription>
+  <pipelineParameters>
+    <booleanParameter name="style" defaultValue="false">
+      <description>whether output is color-highlighted HTML instead of deltaV2 (false)</description>
+    </booleanParameter>
+    <booleanParameter name="ordered-rows" defaultValue="false">
+      <description>whether table rows are ordered (false)</description>
+    </booleanParameter>
+    <booleanParameter name="ordered-cols" defaultValue="false">
+      <description>whether table columns are ordered (false)</description>
+    </booleanParameter>
+  </pipelineParameters>
+
+  <!-- Optimise the standard configuration for the DiffReport -->
+  <standardConfig>
+
+    <lexicalPreservation>
+      <defaults>
+        <retain literalValue="true"/>
+        <processingMode literalValue="useDefault"/>
+        <outputType literalValue="useDefault"/>
+      </defaults>
+      <overrides>
+        <preserveItems>
+          <ignorableWhitespace>
+            <retain literalValue="false"/>
+          </ignorableWhitespace>
+          <contentModel>
+            <retain literalValue="false"/>
+          </contentModel>
+          <documentLocation>
+            <retain literalValue="false"/>
+          </documentLocation>
+        </preserveItems>
+      </overrides>
+    </lexicalPreservation>
+
+    <tableConfiguration>
+      <processCalsTables literalValue="true"/>
+      <processHtmlTables literalValue="true"/>
+    </tableConfiguration>
+
+    <resultReadabilityOptions>
+      <modifiedWhitespaceBehaviour literalValue="normalize"/>
+      <mixedContentDetectionScope literalValue="local"/>
+      <elementSplittingEnabled literalValue="false"/>
+    </resultReadabilityOptions>
+
+    <outputFormatConfiguration>
+      <resultFormat literalValue="delta"/>
+      <modifiedFormatOutput literalValue="change"/>
+    </outputFormatConfiguration>
+
+  </standardConfig>
+
+  <advancedConfig>
+    <parserFeatures>
+      <feature name="http://apache.org/xml/features/nonvalidating/load-external-dtd" literalValue="false"/>
+    </parserFeatures>
+  </advancedConfig>
+
+  <extensionPoints>
+      <inputExtensionPoints>
+      <preTablePoint>
+        <filter>
+          <file path="mark-ordered.xsl" relBase="dxp"/>
+          <parameter name="ordered-row" xpath="boolean($ordered-rows)"/>
+          <parameter name="ordered-col" xpath="boolean($ordered-cols)"/>
+        </filter>
+      </preTablePoint>
+    </inputExtensionPoints>
+
+    <outputExtensionPoints>
+      <finalPoint>
+        <filter when="$style">
+          <file path="style.xsl" relBase="dxp"/>
+        </filter>
+      </finalPoint>
+    </outputExtensionPoints>
+  </extensionPoints>
+
+</documentComparator>

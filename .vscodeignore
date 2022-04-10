@@ -1,0 +1,13 @@
+.vscode/**
+.vscode-test/**
+out/test/**
+out/**/*.map
+src/**
+media/jsconfig.json
+resources/**
+sample/**
+.gitignore
+.eslintrc.js
+tsconfig.json
+*.vsix
+cals-table-samples/**

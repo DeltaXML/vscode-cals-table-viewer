@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_slk_cvx_zqb">
+    <title></title>
+    <body>
+      <section>
+        <title>Replace this with processor setup details</title>
+        <p>
+      <table frame="all" rowsep="1" colsep="1" id="table_j3b_dvx_zqb">
+        <title/>
+        <tgroup cols="5">
+            <colspec colname="c1" colnum="1" colwidth="1*"/>
+            <colspec colname="c3" colnum="2" colwidth="1*"/>
+            <colspec colname="c4" colnum="3" colwidth="1*"/>
+            <colspec colname="c5" colnum="4" colwidth="1*"/>
+            <colspec colname="c2" colnum="5" colwidth="1*"/>
+            <tbody>
+              <row>
+                <entry>Name 1 </entry>
+                <entry>City 3</entry>
+                <entry>Date 2</entry>
+                <entry>Fruit 6</entry>
+                <entry>Colour 5 </entry>
+              </row>
+              <row>
+                <entry>Anna</entry>
+                <entry>Acre</entry>
+                <entry>01/01/1970</entry>
+                <entry>Apple</entry>
+                <entry>Red</entry>
+              </row>
+              <row>
+                <entry>Bill</entry>
+                <entry namest="c3" nameend="c2" morerows="1">Boston 02/02/1950 Pear Yellow Constantinople 03/03/1960 Kiwi Orange</entry>
+              </row>
+              <row>
+                <entry>Charlie</entry>
+              </row>
+            </tbody>
+          </tgroup>
+      </table>
+    </p>
+      </section>
+    </body>
+</topic>

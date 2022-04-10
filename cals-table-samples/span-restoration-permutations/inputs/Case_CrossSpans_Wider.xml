@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="1">
+    <title>Examples</title>
+    <body>
+        <section>
+            <title>Replace this with processor setup details</title>
+            <p>
+                <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+                    <title>No Spans</title>
+                    <tgroup cols="7">
+                        <colspec colname="a"/>
+                        <colspec colname="newCol2"/>
+                        <colspec colname="c"/>
+                        <colspec colname="newCol4"/>
+                        <colspec colname="newCol5"/>
+                        <colspec colname="newCol6"/>
+                        <colspec colname="newCol7"/>
+                        <tbody>
+                            <row>
+                                <entry>Region</entry>
+                                <entry>Manager</entry>
+                                <entry>Coordinator</entry>
+                                <entry>Local</entry>
+                                <entry>Secrtary</entry>
+                                <entry>Key Engineer</entry>
+                                <entry>Support</entry>
+                            </row>
+                            <row>
+                                <entry>US</entry>
+                                <entry>Adam</entry>
+                                <entry namest="c" nameend="newCol4" morerows="4">Benjamin</entry>
+                                <entry>Diane</entry>
+                                <entry>Edward</entry>
+                                <entry>Frank</entry>
+                            </row>
+                            <row>
+                                <entry namest="a" nameend="newCol2" morerows="1">UK</entry>
+                                <entry namest="newCol5" nameend="newCol6" morerows="1">Dodie</entry>
+                                <entry>Frances</entry>
+                            </row>
+                            <row>
+                                <entry>Felipe</entry>
+                            </row>
+                            <row>
+                                <entry>Africa</entry>
+                                <entry>Art</entry>
+                                <entry>Danny</entry>
+                                <entry>Edith</entry>
+                                <entry>Fernando</entry>
+                            </row>
+                            <row>
+                                <entry>Asia</entry>
+                                <entry>Abbie</entry>
+                                <entry>Dylan</entry>
+                                <entry>Esposito</entry>
+                                <entry>Fred</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+        </section>
+    </body>
+</topic>

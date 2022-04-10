@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="1">
+    <title>Examples</title>
+    <body>
+        <section>
+            <title>Replace this with processor setup details</title>
+            <p>
+                <table frame="all" rowsep="1" colsep="1" id="table_lcl_25w_sjb">
+                    <title>No Spans</title>
+                    <tgroup cols="7">
+                        <colspec colname="a"/>
+                        <colspec colname="newCol2"/>
+                        <colspec colname="c"/>
+                        <colspec colname="newCol4"/>
+                        <colspec colname="newCol5"/>
+                        <colspec colname="newCol6"/>
+                        <colspec colname="newCol7"/>
+                        <tbody>
+                            <row>
+                                <entry>Region</entry>
+                                <entry>Manager</entry>
+                                <entry>Coordinator</entry>
+                                <entry>Local</entry>
+                                <entry>Secrtary</entry>
+                                <entry>Key Engineer</entry>
+                                <entry>Support</entry>
+                            </row>
+                            <row>
+                                <entry>US</entry>
+                                <entry>Adam</entry>
+                                <entry>Beth</entry>
+                                <entry>Callum</entry>
+                                <entry>Diane</entry>
+                                <entry>Edward</entry>
+                                <entry>Frank</entry>
+                            </row>
+                            <row>
+                                <entry>UK</entry>
+                                <entry>Anthony</entry>
+                                <entry>Bob</entry>
+                                <entry>Clare</entry>
+                                <entry>Dodie</entry>
+                                <entry>Ethel</entry>
+                                <entry>Frances</entry>
+                            </row>
+                            <row>
+                                <entry>Europe</entry>
+                                <entry>Ash</entry>
+                                <entry>Bill</entry>
+                                <entry>Cecilia</entry>
+                                <entry>Dave</entry>
+                                <entry>Ernie</entry>
+                                <entry>Felipe</entry>
+                            </row>
+                            <row>
+                                <entry>Africa</entry>
+                                <entry>Art</entry>
+                                <entry>Bruce</entry>
+                                <entry>Colin</entry>
+                                <entry>Danny</entry>
+                                <entry>Edith</entry>
+                                <entry>Fernando</entry>
+                            </row>
+                            <row>
+                                <entry>Asia</entry>
+                                <entry>Abbie</entry>
+                                <entry>Bert</entry>
+                                <entry>Connor</entry>
+                                <entry>Dylan</entry>
+                                <entry>Esposito</entry>
+                                <entry>Fred</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+        </section>
+    </body>
+</topic>
