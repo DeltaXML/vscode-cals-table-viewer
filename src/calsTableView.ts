@@ -19,8 +19,8 @@ export class CalsTableView {
 
 	public static createOrShow(extensionUri: vscode.Uri) {
 		const activeEditor: vscode.TextEditor|undefined = vscode.window.activeTextEditor;
-		const column = vscode.window.activeTextEditor
-			? vscode.window.activeTextEditor.viewColumn
+		const column = activeEditor
+			? vscode.ViewColumn.Beside
 			: undefined;
 
 		// If we already have a panel, show it.
@@ -33,7 +33,7 @@ export class CalsTableView {
 		const panel = vscode.window.createWebviewPanel(
 			CalsTableView.viewType,
 			CalsTableView.viewerTitle,
-			column || vscode.ViewColumn.One,
+			{ viewColumn: column || vscode.ViewColumn.One, preserveFocus: true },
 			CalsTableView.getWebviewOptions(extensionUri),
 		);
 
