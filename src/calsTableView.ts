@@ -13,11 +13,12 @@ export class CalsTableView {
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
 	private _disposables: vscode.Disposable[] = [];
-	private sourceText = '<root/>';
 	private sourceFilename = '';
 	private sourcePath = '';
+	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri) {
+		const activeEditor: vscode.TextEditor|undefined = vscode.window.activeTextEditor;
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
@@ -36,7 +37,7 @@ export class CalsTableView {
 			CalsTableView.getWebviewOptions(extensionUri),
 		);
 
-		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri);
+		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor);
 		return CalsTableView.currentPanel;
 	}
 
@@ -50,15 +51,12 @@ export class CalsTableView {
 		return fileName;
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
-		if (vscode.window.activeTextEditor) {
-			this.sourceText = vscode.window.activeTextEditor.document.getText();
-			const fullPath = vscode.window.activeTextEditor.document.fileName;
-			this.sourcePath = fullPath;
-			this.sourceFilename = CalsTableView.filenameFromPath(fullPath);
-		}
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, activeEditor?: vscode.TextEditor|undefined) {
+
 		this._panel = panel;
 		this._extensionUri = extensionUri;
+		const stylesSefPath = vscode.Uri.joinPath(this._extensionUri, 'saxon', 'style-tables.sef.json');
+		this.sefURI = this._panel.webview.asWebviewUri(stylesSefPath).toString();
 
 		// Set the webview's initial html content
 		this._update();
@@ -79,9 +77,11 @@ export class CalsTableView {
 			null,
 			this._disposables
 		);
+		this.updateViewSource(activeEditor);
 	}
 
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
+		console.log('editor', editor?.document.fileName);
 		if (editor) {
 			const fullPath = editor.document.fileName;
 			if (fullPath !== this.sourcePath) {
@@ -162,12 +162,9 @@ export class CalsTableView {
 		// Local path to css styles
 		const styleResetPath = vscode.Uri.joinPath(this._extensionUri, 'media', 'reset.css');
 		const stylesPathMainPath = vscode.Uri.joinPath(this._extensionUri, 'media', 'vscode.css');
-		const stylesSefPath = vscode.Uri.joinPath(this._extensionUri, 'saxon', 'style-tables.sef.json');
-
 		// Uri to load styles into webview
 		const stylesResetUri = webview.asWebviewUri(styleResetPath);
 		const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
-		const stylesSefUriString = webview.asWebviewUri(stylesSefPath).toString();
 
 		// Use a nonce to only allow specific scripts to be run
 		const nonce = this.getNonce();
@@ -193,11 +190,7 @@ export class CalsTableView {
 			<body>
 				<div id="main"></div>
 				<div id="end"></div>
-				<script nonce="${nonce}">var saxonData = {
-					'sourceText': ${JSON.stringify(this.sourceText)},
-					'sef': ${JSON.stringify(stylesSefUriString)},
-					'filename': ${JSON.stringify(this.sourceFilename)}
-				}</script>
+				<script nonce="${nonce}">var saxonData = {'sef': ${JSON.stringify(this.sefURI)}}</script>
 				<script nonce="${nonce}" src="${scriptSaxonUri}"></script>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>

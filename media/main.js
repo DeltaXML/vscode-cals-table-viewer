@@ -2,9 +2,6 @@
 // It cannot access the main VS Code APIs directly.
 const vscode = acquireVsCodeApi();
 const init = () => {
-    // @ts-ignore
-    update(SaxonJS, saxonData);
-
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         const message = event.data; // The json data that the extension sent
