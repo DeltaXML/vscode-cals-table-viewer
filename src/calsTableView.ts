@@ -91,7 +91,7 @@ export class CalsTableView {
 		this._panel.onDidChangeViewState(
 			e => {
 				if (this._panel.visible) {
-					this._update();
+					this.updateAll();
 				}
 			},
 			null,
