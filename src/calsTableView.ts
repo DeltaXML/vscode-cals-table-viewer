@@ -1,8 +1,10 @@
+import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
 
 enum OutputMethod {
 	append = 'append',
-	replace = 'replace'
+	replace = 'replace',
+	clear = 'clear'
 }
 
 export class CalsTableView {
@@ -19,7 +21,7 @@ export class CalsTableView {
 	private readonly _extensionUri: vscode.Uri;
 
 	private _disposables: vscode.Disposable[] = [];
-	private sourcePath = '';
+	private sourcePaths: vscode.Uri[] = [];
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri) {
@@ -50,9 +52,10 @@ export class CalsTableView {
 		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri);
 	}
 
-	private static filenameFromPath(fullPath: string) {
-		const pos = fullPath.lastIndexOf('/');
-		const fileName = pos > -1 ? fullPath.substring(pos + 1) : fullPath;
+	private static filenameFromPath(fullPath: vscode.Uri) {
+		const fPath = fullPath.fsPath;
+		const pos = fPath.lastIndexOf('/');
+		const fileName = pos > -1 ? fPath.substring(pos + 1) : fPath;
 		return fileName;
 	}
 
@@ -99,9 +102,10 @@ export class CalsTableView {
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor) {
 			console.log('scheme ', editor.document.uri.scheme);
-			const fullPath = editor.document.fileName;
-			if (fullPath !== this.sourcePath) {
-				this.sourcePath = fullPath;
+			const fullPath = editor.document.uri;
+			// append content if new file path is not the same as the last path:
+			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
+				this.sourcePaths.push(fullPath);
 				const sourceFilename = CalsTableView.filenameFromPath(fullPath);
 
 				this._panel.webview.postMessage({
@@ -112,6 +116,28 @@ export class CalsTableView {
 				});
 			}
 		}
+	}
+
+	private updateAll() {
+		this._panel.webview.postMessage({
+			command: 'update',
+			sourceText: '<empty/>',
+			filename: '',
+			method: OutputMethod.clear
+		});
+		this.sourcePaths.forEach((path) => {
+			const sourceFilename = CalsTableView.filenameFromPath(path);
+			vscode.workspace.fs.readFile(path)
+				.then((item) => {
+					console.log('a');
+					this._panel.webview.postMessage({
+						command: 'update',
+						sourceText: new TextDecoder().decode(item),
+						filename: sourceFilename,
+						method: OutputMethod.append
+					});
+				});
+		});
 	}
 
 	public dispose() {
@@ -182,7 +208,6 @@ export class CalsTableView {
 		// Uri to load styles into webview
 		const stylesResetUri = webview.asWebviewUri(styleResetPath);
 		const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
-		const sourceFilename = CalsTableView.filenameFromPath(this.sourcePath);
 
 		// Use a nonce to only allow specific scripts to be run
 		const nonce = this.getNonce();
@@ -203,7 +228,7 @@ export class CalsTableView {
 				<link href="${stylesResetUri}" rel="stylesheet">
 				<link href="${stylesMainUri}" rel="stylesheet">
 
-				<title>${sourceFilename}</title>
+				<title>CALS Table Viewer</title>
 			</head>
 			<body>
 				<div id="main"></div>

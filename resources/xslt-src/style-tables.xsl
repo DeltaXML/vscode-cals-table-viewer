@@ -17,11 +17,17 @@
   <xsl:import href="style.xsl"/>
   <xsl:variable name="Result.replace" as="xs:string" select="'replace'"/>
   <xsl:variable name="Result.append" as="xs:string" select="'append'"/>
+  <xsl:variable name="Result.clear" as="xs:string" select="'clear'"/>
   <xsl:param name="method" as="xs:string"/>
   
   <xsl:template match="/">
     <xsl:message select="'root message'"/>
     <xsl:choose>
+      <xsl:when test="$method eq $Result.clear">
+        <xsl:result-document href="#main" method="ixsl:replace-content">
+          <xsl:sequence select="' '"/>
+        </xsl:result-document>
+      </xsl:when>
       <xsl:when test="$method eq $Result.replace">
         <xsl:result-document href="#main" method="ixsl:replace-content">
           <xsl:apply-templates select="*"/>
