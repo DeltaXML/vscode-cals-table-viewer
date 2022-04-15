@@ -17,13 +17,13 @@ export class CalsTableView {
 
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
+
 	private _disposables: vscode.Disposable[] = [];
-	private sourceFilename = '';
 	private sourcePath = '';
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri) {
-		const activeEditor: vscode.TextEditor|undefined = vscode.window.activeTextEditor;
+		const activeEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 		const column = activeEditor
 			? vscode.ViewColumn.Beside
 			: undefined;
@@ -56,7 +56,7 @@ export class CalsTableView {
 		return fileName;
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, activeEditor?: vscode.TextEditor|undefined) {
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, activeEditor?: vscode.TextEditor | undefined) {
 
 		this._panel = panel;
 		this._extensionUri = extensionUri;
@@ -83,19 +83,31 @@ export class CalsTableView {
 			this._disposables
 		);
 		this.updateViewSource(activeEditor);
+
+		// Update the content based on view changes
+		this._panel.onDidChangeViewState(
+			e => {
+				if (this._panel.visible) {
+					this._update();
+				}
+			},
+			null,
+			this._disposables
+		);
 	}
 
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor) {
+			console.log('scheme ', editor.document.uri.scheme);
 			const fullPath = editor.document.fileName;
 			if (fullPath !== this.sourcePath) {
 				this.sourcePath = fullPath;
-				this.sourceFilename = CalsTableView.filenameFromPath(fullPath);
-				
+				const sourceFilename = CalsTableView.filenameFromPath(fullPath);
+
 				this._panel.webview.postMessage({
-					command: 'update', 
+					command: 'update',
 					sourceText: editor.document.getText(),
-					filename: this.sourceFilename,
+					filename: sourceFilename,
 					method: OutputMethod.append
 				});
 			}
@@ -170,6 +182,7 @@ export class CalsTableView {
 		// Uri to load styles into webview
 		const stylesResetUri = webview.asWebviewUri(styleResetPath);
 		const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
+		const sourceFilename = CalsTableView.filenameFromPath(this.sourcePath);
 
 		// Use a nonce to only allow specific scripts to be run
 		const nonce = this.getNonce();
@@ -190,7 +203,7 @@ export class CalsTableView {
 				<link href="${stylesResetUri}" rel="stylesheet">
 				<link href="${stylesMainUri}" rel="stylesheet">
 
-				<title>${this.sourceFilename}</title>
+				<title>${sourceFilename}</title>
 			</head>
 			<body>
 				<div id="main"></div>
