@@ -8,7 +8,7 @@ const init = () => {
         switch (message.command) {
             case 'update':
                 // @ts-ignore
-                update(SaxonJS, { sef: saxonData.sef, sourceText: message.sourceText, filename: message.filename });
+                update(SaxonJS, { sef: saxonData.sef, sourceText: message.sourceText, filename: message.filename, method: message.method });
                 break;
         }
     });
@@ -17,7 +17,7 @@ const init = () => {
 const update = (
     /** @type {{ getProcessorInfo: () => { (): any; new (): any; productName: any; }; transform: (arg0: { stylesheetLocation: string; sourceText: string; logLevel: number; stylesheetParams: any }, arg1: string) => void; }} */
     saxonProcessor, 
-    /** @type {{ sef: string; sourceText: string; filename: string }} */
+    /** @type {{ sef: string; sourceText: string; filename: string; method: string }} */
     txData) => {
     console.log(saxonProcessor.getProcessorInfo().productName);
     try {
@@ -25,7 +25,7 @@ const update = (
             stylesheetLocation: txData.sef,
             sourceText: txData.sourceText,
             logLevel: 2,
-            stylesheetParams: { "headerText": txData.filename }
+            stylesheetParams: { "headerText": txData.filename, "method": txData.method }
         },
         "async");
     } catch (error) {

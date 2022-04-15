@@ -1,5 +1,10 @@
 import * as vscode from 'vscode';
 
+enum OutputMethod {
+	append = 'append',
+	replace = 'replace'
+}
+
 export class CalsTableView {
 	/**
 	 * Track the current panel. Only allow a single panel to exist at a time.
@@ -81,7 +86,6 @@ export class CalsTableView {
 	}
 
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
-		console.log('editor', editor?.document.fileName);
 		if (editor) {
 			const fullPath = editor.document.fileName;
 			if (fullPath !== this.sourcePath) {
@@ -91,7 +95,8 @@ export class CalsTableView {
 				this._panel.webview.postMessage({
 					command: 'update', 
 					sourceText: editor.document.getText(),
-					filename: this.sourceFilename
+					filename: this.sourceFilename,
+					method: OutputMethod.append
 				});
 			}
 		}

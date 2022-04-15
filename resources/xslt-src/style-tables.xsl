@@ -15,21 +15,33 @@
        this is counter to the SaxonJS documentation/samples
   -->
   <xsl:import href="style.xsl"/>
+  <xsl:variable name="Result.replace" as="xs:string" select="'replace'"/>
+  <xsl:variable name="Result.append" as="xs:string" select="'append'"/>
+  <xsl:param name="method" as="xs:string"/>
   
   <xsl:template match="/">
-    <xsl:message select="'root message'"/>  
-    <xsl:result-document href="#main">
-      <xsl:apply-templates select="*"/>
-    </xsl:result-document>
-    <ixsl:schedule-action wait="5">
-      <xsl:call-template name="scroll"/>
-    </ixsl:schedule-action>
+    <xsl:message select="'root message'"/>
+    <xsl:choose>
+      <xsl:when test="$method eq $Result.replace">
+        <xsl:result-document href="#main" method="ixsl:replace-content">
+          <xsl:apply-templates select="*"/>
+        </xsl:result-document>
+      </xsl:when>
+      <xsl:when test="$method eq $Result.append">
+        <xsl:result-document href="#main" method="ixsl:append-content">
+          <xsl:apply-templates select="*"/>
+        </xsl:result-document>
+        <ixsl:schedule-action wait="5">
+          <xsl:call-template name="scrollToEnd"/>
+        </ixsl:schedule-action>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
-  <xsl:template name="scroll">
+  <xsl:template name="scrollToEnd">
     <xsl:sequence select="ixsl:call(id('end', ixsl:page()), 'scrollIntoView', [])"/>
   </xsl:template>
-
+  
   
   <xsl:template match="*:title[contains(.,'Section Title')]"/>
   <xsl:template match="*:title[contains(.,'Replace this')]"/>
