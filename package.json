@@ -25,7 +25,7 @@
     "commands": [
       {
         "command": "calsViewer.start",
-        "title": "Start CALS table viewer",
+        "title": "Open",
         "category": "CALS Viewer"
       }
     ]

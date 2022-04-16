@@ -16,7 +16,7 @@ The viewer also highlights differences in the tables identified by DeltaXML's De
 ## Getting Started
 1. Launch VS Code and install the `vsix` extension
 2. In VS Code, open an XML file containing CALS tables
-3. From the Command Palette (**⇧⌘P**), invoke `Start CALS table viewer`
+3. From the Command Palette (**⇧⌘P**), invoke `CALS viewer: Open`
 	- A **CALS Table Viewer** Pane is shown alongside the current view
 	- CALS tables found in the file are rendered with basic styling
 4. Open further XML files to append to the current view
@@ -26,10 +26,10 @@ The viewer also highlights differences in the tables identified by DeltaXML's De
 
 ## Project Goals
 
-This is a DeltaXML 'free-sprint' project. There were two main goals for this project:
+This project started as a DeltaXML 'free-sprint' project. There are two main goals for this project:
 
 1. Provide a developer tool to help with analysing results from CALS table processing
-2. Demonstrate how XSLT 3.0 (with interactive extensions) and Saxon JS can be used to enhance data visualisation inside Visual Studio Code.
+2. Demonstrate how XSLT 3.0 and Saxon JS can be used to enhance data visualisation inside Visual Studio Code.
 
 ---
 ## Development Setup
