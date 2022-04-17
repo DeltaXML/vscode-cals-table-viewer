@@ -129,9 +129,7 @@ export class CalsTableView {
 
 				this._panel.webview.postMessage({
 					command: 'update',
-					// eslint-disable-next-line @typescript-eslint/no-array-constructor
 					sourceText: [editor.document.getText()],
-					// eslint-disable-next-line @typescript-eslint/no-array-constructor
 					sourceFilename: [sourceFilename],
 					method: OutputMethod.append
 				});
