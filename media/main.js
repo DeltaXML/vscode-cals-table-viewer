@@ -3,29 +3,30 @@
 const vscode = acquireVsCodeApi();
 const init = () => {
     // Handle messages sent from the extension to the webview
-    window.addEventListener('message', event => {
+    window.addEventListener('message', async event => {
         const message = event.data; // The json data that the extension sent
+        console.log('eventData ', event.data);
         switch (message.command) {
             case 'update':
                 // @ts-ignore
-                update(SaxonJS, { sef: saxonData.sef, sourceText: message.sourceText, filename: message.filename, method: message.method });
+                await update(SaxonJS, { sef: saxonData.sef, sourceText: message.sourceText, sourceFilename: message.sourceFilename, method: message.method });
                 break;
         }
     });
 };
 
-const update = (
-    /** @type {{ getProcessorInfo: () => { (): any; new (): any; productName: any; }; transform: (arg0: { stylesheetLocation: string; sourceText: string; logLevel: number; stylesheetParams: any }, arg1: string) => void; }} */
+const update = async (
+    /** @type {{ getProcessorInfo: () => { (): any; new (): any; productName: any; }; transform: (arg0: { stylesheetLocation: string; initialTemplate: string; logLevel: number; stylesheetParams: any }, arg1: string) => Promise<any>; }} */
     saxonProcessor, 
-    /** @type {{ sef: string; sourceText: string; filename: string; method: string }} */
+    /** @type {{ sef: string; sourceText: string; sourceFilename: string; method: string }} */
     txData) => {
     console.log(saxonProcessor.getProcessorInfo().productName);
     try {
-        saxonProcessor.transform({
+        await saxonProcessor.transform({
             stylesheetLocation: txData.sef,
-            sourceText: txData.sourceText,
+            initialTemplate: "main",
             logLevel: 2,
-            stylesheetParams: { "headerText": txData.filename, "method": txData.method }
+            stylesheetParams: { "sourceFilename": txData.sourceFilename, "sourceText": txData.sourceText, "method": txData.method }
         },
         "async");
     } catch (error) {

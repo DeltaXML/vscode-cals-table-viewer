@@ -27,6 +27,11 @@
         "command": "calsViewer.start",
         "title": "Open",
         "category": "CALS Viewer"
+      },
+      {
+        "command": "calsViewer.refresh",
+        "title": "Refresh",
+        "category": "CALS Viewer"
       }
     ]
   },

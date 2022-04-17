@@ -19,8 +19,10 @@
   <xsl:variable name="Result.append" as="xs:string" select="'append'"/>
   <xsl:variable name="Result.clear" as="xs:string" select="'clear'"/>
   <xsl:param name="method" as="xs:string"/>
+  <xsl:param name="sourceText" as="xs:string+"/>
+  <xsl:param name="sourceFilename" as="xs:string+"/>
   
-  <xsl:template match="/">
+  <xsl:template name="main">
     <xsl:message select="'root message'"/>
     <xsl:choose>
       <xsl:when test="$method eq $Result.clear">
@@ -35,7 +37,10 @@
       </xsl:when>
       <xsl:when test="$method eq $Result.append">
         <xsl:result-document href="#main" method="ixsl:append-content">
-          <xsl:apply-templates select="*"/>
+          <p class="headerText"><xsl:value-of select="$sourceFilename[1]"/></p>
+
+          <xsl:apply-templates select="parse-xml($sourceText[1])/*"/>
+          <hr class="headerText"/>
         </xsl:result-document>
         <ixsl:schedule-action wait="5">
           <xsl:call-template name="scrollToEnd"/>

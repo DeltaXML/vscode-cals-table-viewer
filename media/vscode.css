@@ -218,9 +218,15 @@ td {
 }
 
 p.headerText {
-  margin: 0;
+  margin: 10px 0px 10px 0px;
   color: #8080fa;
 }
+hr.headerText {
+  margin: 10px;
+  color: #8080fa;
+  border-color: #8080fa;
+}
+
 
 table.deltaV2A,choicetable.deltaV2A {
   border-style: dashed;
@@ -228,8 +234,6 @@ table.deltaV2A,choicetable.deltaV2A {
   border-color: red;
 }
 
-section {
-  margin: 10px 10px 10px 10px;
+/* section {
   border-bottom: 1px solid rgb(190, 190, 190);
-  border-color: #8080fa;
-}
+} */

@@ -7,6 +7,11 @@ enum OutputMethod {
 	clear = 'clear'
 }
 
+interface SourceData {
+	uri: string,
+	text: string,
+}
+
 export class CalsTableView {
 	/**
 	 * Track the current panel. Only allow a single panel to exist at a time.
@@ -31,8 +36,8 @@ export class CalsTableView {
 			: undefined;
 
 		// If we already have a panel, show it.
-		if (CalsTableView.currentPanel) {
-			CalsTableView.currentPanel._panel.reveal(column);
+		if (this.currentPanel) {
+			this.currentPanel.refreshView();
 			return;
 		}
 
@@ -67,7 +72,7 @@ export class CalsTableView {
 		this.sefURI = this._panel.webview.asWebviewUri(stylesSefPath).toString();
 
 		// Set the webview's initial html content
-		this._update();
+		this._panel.webview.html = this._getHtmlForWebview(this._panel.webview);
 
 		// Listen for when the panel is disposed
 		// This happens when the user closes the panel or when the panel is closed programmatically
@@ -99,6 +104,20 @@ export class CalsTableView {
 		);
 	}
 
+	public refreshView() {
+		if (CalsTableView.currentPanel) {
+			const activeEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+			const column = activeEditor
+				? vscode.ViewColumn.Beside
+				: undefined;
+			CalsTableView.currentPanel._panel.reveal(column);
+			this.updateAll();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor) {
 			console.log('scheme ', editor.document.uri.scheme);
@@ -110,22 +129,22 @@ export class CalsTableView {
 
 				this._panel.webview.postMessage({
 					command: 'update',
-					sourceText: editor.document.getText(),
-					filename: sourceFilename,
+					// eslint-disable-next-line @typescript-eslint/no-array-constructor
+					sourceText: [editor.document.getText()],
+					// eslint-disable-next-line @typescript-eslint/no-array-constructor
+					sourceFilename: [sourceFilename],
 					method: OutputMethod.append
 				});
 			}
 		}
 	}
 
-	private updateAll() {
-		this._panel.webview.postMessage({
-			command: 'update',
-			sourceText: '<empty/>',
-			filename: '',
-			method: OutputMethod.clear
-		});
-		this.sourcePaths.forEach((path) => {
+	private async updateAll() {
+        
+		const uriMap: Map<number, SourceData> = new Map();
+
+
+		this.sourcePaths.forEach((path, index) => {
 			const sourceFilename = CalsTableView.filenameFromPath(path);
 			vscode.workspace.fs.readFile(path)
 				.then((item) => {
@@ -154,18 +173,6 @@ export class CalsTableView {
 		}
 	}
 
-	private _update() {
-		const webview = this._panel.webview;
-		this._updateAllWebview(webview);
-
-		// If we need to vary the webview's content based on where it is located in the editor:
-		// switch (this._panel.viewColumn) {
-		// 	case vscode.ViewColumn.Two:
-		// 		this._updateAllWebview(webview);
-		// 		return;
-		// }
-	}
-
 	private getNonce() {
 		let text = '';
 		const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -186,11 +193,6 @@ export class CalsTableView {
 				vscode.Uri.joinPath(extensionUri, 'saxon')
 			]
 		};
-	}
-
-	private _updateAllWebview(webview: vscode.Webview) {
-		//this._panel.title = this.sourceFilename;
-		this._panel.webview.html = this._getHtmlForWebview(webview);
 	}
 
 	private _getHtmlForWebview(webview: vscode.Webview) {

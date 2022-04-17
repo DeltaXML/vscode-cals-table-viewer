@@ -16,7 +16,6 @@
   <xsl:mode name="insertInputs" on-no-match="shallow-copy"/>
   <xsl:mode name="add-table" on-no-match="shallow-copy"/>
   
-  <xsl:param name="headerText" as="xs:string"/>
   <xsl:variable name="showSpans" as="xs:boolean" select="true()"/>
   
   <xsl:template match="section" mode="#all">
@@ -109,7 +108,6 @@
   </xsl:template>
   
   <xsl:template match="*:table" mode="#all">
-    <p class="headerText"><xsl:value-of select="$headerText"/></p>
     <xsl:apply-templates select="p[@id eq 'uri' and @deltaxml:deltaV2 eq 'A!=B']" mode="insertInputs"/>
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="#current"/>
