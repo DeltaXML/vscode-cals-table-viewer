@@ -151,17 +151,16 @@ export class CalsTableView {
 	}
 
 	private async updateAll(renewSourceTexts: boolean) {
-		console.log('updateAll ');
+		console.log('updateAll renew: ' + renewSourceTexts);
 
 		const newSourceTexts: string[] = [];
 		if (renewSourceTexts) {
-			this.sourcePaths.forEach((path, index) => {
-				vscode.workspace.fs.readFile(path)
-					.then((item) => {
-						const sourceText = new TextDecoder().decode(item);
-						newSourceTexts.push(sourceText);
-					});
-			});
+			for (let index = 0; index < this.sourcePaths.length; index++) {
+				const sourcePath = this.sourcePaths[index];
+				const sourceArray = await vscode.workspace.fs.readFile(sourcePath);
+				const sourceText = new TextDecoder().decode(sourceArray);
+				newSourceTexts.push(sourceText);
+			}
 			this.sourceTexts = newSourceTexts;
 		}
 
