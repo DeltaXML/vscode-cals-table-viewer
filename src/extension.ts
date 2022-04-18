@@ -6,11 +6,6 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('calsViewer.open', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri);
-		}),
-		vscode.commands.registerCommand('calsViewer.refresh', () => {
-			if (calsTableView) {
-				calsTableView.refreshView();
-			}
 		})
 	);
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
