@@ -34,16 +34,13 @@
       </xsl:when>
       <xsl:when test="$method eq $Result.replace">
         <xsl:result-document href="#main" method="ixsl:replace-content">
-          <xsl:sequence select="' '"/>
-        </xsl:result-document>
-        <xsl:for-each select="1 to count($sourceFilename)">
-          <xsl:variable name="index" as="xs:integer" select="."/>  
-          <xsl:result-document href="#main" method="ixsl:append-content">
+          <xsl:for-each select="1 to count($sourceFilename)">
+            <xsl:variable name="index" as="xs:integer" select="."/>  
             <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>            
             <xsl:apply-templates select="parse-xml($sourceText[$index])/*"/>
             <hr class="headerText"/>
-          </xsl:result-document>
-        </xsl:for-each>
+          </xsl:for-each>
+        </xsl:result-document>
       </xsl:when>
       <xsl:when test="$method eq $Result.append">
         <xsl:for-each select="1 to count($sourceFilename)">
