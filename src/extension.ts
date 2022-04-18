@@ -4,7 +4,7 @@ import { CalsTableView } from './calsTableView';
 export function activate(context: vscode.ExtensionContext) {
 	let calsTableView: CalsTableView | undefined;
 	context.subscriptions.push(
-		vscode.commands.registerCommand('calsViewer.start', () => {
+		vscode.commands.registerCommand('calsViewer.open', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri);
 		}),
 		vscode.commands.registerCommand('calsViewer.refresh', () => {

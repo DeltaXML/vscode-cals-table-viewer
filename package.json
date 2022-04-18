@@ -17,14 +17,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:calsViewer.start",
+    "onCommand:calsViewer.open",
     "onWebviewPanel:calsViewer"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "calsViewer.start",
+        "command": "calsViewer.open",
         "title": "Open",
         "category": "CALS Viewer"
       },
