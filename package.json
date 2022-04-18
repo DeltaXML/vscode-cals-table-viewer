@@ -2,7 +2,7 @@
   "name": "cals-table-viewer",
   "displayName": "CALS Table Viewer",
   "description": "Render CALS tables found in the current file",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "DeltaXML Internal",
   "private": true,
   "license": "MIT",
