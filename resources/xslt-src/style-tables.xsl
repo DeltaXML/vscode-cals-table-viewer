@@ -19,11 +19,13 @@
   <xsl:variable name="Result.append" as="xs:string" select="'append'"/>
   <xsl:variable name="Result.clear" as="xs:string" select="'clear'"/>
   <xsl:param name="method" as="xs:string"/>
-  <xsl:param name="sourceText" as="xs:string+"/>
-  <xsl:param name="sourceFilename" as="xs:string+"/>
+  <xsl:param name="sourceText" as="xs:string*"/>
+  <xsl:param name="sourceFilename" as="xs:string*"/>
   
   <xsl:template name="main">
-    <xsl:message select="'root message'"/>
+    <xsl:message select="'main method: ' || $method"/>
+    <xsl:message select="'file count: ' || count($sourceFilename)"/>
+    <xsl:message select="'sourceFilename', $sourceFilename"/>
     <xsl:choose>
       <xsl:when test="$method eq $Result.clear">
         <xsl:result-document href="#main" method="ixsl:replace-content">
@@ -32,16 +34,26 @@
       </xsl:when>
       <xsl:when test="$method eq $Result.replace">
         <xsl:result-document href="#main" method="ixsl:replace-content">
-          <xsl:apply-templates select="*"/>
+          <xsl:sequence select="' '"/>
         </xsl:result-document>
+        <xsl:for-each select="1 to count($sourceFilename)">
+          <xsl:variable name="index" as="xs:integer" select="."/>  
+          <xsl:result-document href="#main" method="ixsl:append-content">
+            <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>            
+            <xsl:apply-templates select="parse-xml($sourceText[$index])/*"/>
+            <hr class="headerText"/>
+          </xsl:result-document>
+        </xsl:for-each>
       </xsl:when>
       <xsl:when test="$method eq $Result.append">
-        <xsl:result-document href="#main" method="ixsl:append-content">
-          <p class="headerText"><xsl:value-of select="$sourceFilename[1]"/></p>
-
-          <xsl:apply-templates select="parse-xml($sourceText[1])/*"/>
-          <hr class="headerText"/>
-        </xsl:result-document>
+        <xsl:for-each select="1 to count($sourceFilename)">
+          <xsl:variable name="index" as="xs:integer" select="."/>  
+          <xsl:result-document href="#main" method="ixsl:append-content">
+            <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>            
+            <xsl:apply-templates select="parse-xml($sourceText[$index])/*"/>
+            <hr class="headerText"/>
+          </xsl:result-document>
+        </xsl:for-each>
         <ixsl:schedule-action wait="5">
           <xsl:call-template name="scrollToEnd"/>
         </ixsl:schedule-action>

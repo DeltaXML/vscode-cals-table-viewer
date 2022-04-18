@@ -7,9 +7,11 @@ enum OutputMethod {
 	clear = 'clear'
 }
 
-interface SourceData {
-	uri: string,
-	text: string,
+interface ViewerMessage {
+	command: string,
+	sourceText: string[],
+	sourceFilename: string[],
+	method: OutputMethod
 }
 
 export class CalsTableView {
@@ -21,12 +23,12 @@ export class CalsTableView {
 
 	public static readonly viewType = 'calsViewer';
 	private static readonly viewerTitle = 'CALS Table Viewer'
-
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
-
+	private initialized = false;
 	private _disposables: vscode.Disposable[] = [];
 	private sourcePaths: vscode.Uri[] = [];
+	private sourceTexts: string[] = [];
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri) {
@@ -95,9 +97,12 @@ export class CalsTableView {
 		// Update the content based on view changes
 		this._panel.onDidChangeViewState(
 			e => {
-				if (this._panel.visible) {
-					this.updateAll();
+				if (this._panel.visible && this.initialized) {
+					console.log('onDidChangeViewState');
+					const renew = false;
+					this.updateAll(renew);
 				}
+				this.initialized = true;
 			},
 			null,
 			this._disposables
@@ -111,25 +116,33 @@ export class CalsTableView {
 				? vscode.ViewColumn.Beside
 				: undefined;
 			CalsTableView.currentPanel._panel.reveal(column);
-			this.updateAll();
+			console.log('refreshView');
+			const renew = true;
+			this.updateAll(renew);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	private postMessageToViewer(message: ViewerMessage) {
+		this._panel.webview.postMessage(message);
+	}
+
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor) {
-			console.log('scheme ', editor.document.uri.scheme);
+			console.log('updateViewSource ');
 			const fullPath = editor.document.uri;
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
 				this.sourcePaths.push(fullPath);
+				const sourceText = editor.document.getText();
+				this.sourceTexts.push(sourceText);
 				const sourceFilename = CalsTableView.filenameFromPath(fullPath);
 
-				this._panel.webview.postMessage({
+				this.postMessageToViewer({
 					command: 'update',
-					sourceText: [editor.document.getText()],
+					sourceText: [sourceText],
 					sourceFilename: [sourceFilename],
 					method: OutputMethod.append
 				});
@@ -137,23 +150,26 @@ export class CalsTableView {
 		}
 	}
 
-	private async updateAll() {
-        
-		const uriMap: Map<number, SourceData> = new Map();
+	private async updateAll(renewSourceTexts: boolean) {
+		console.log('updateAll ');
 
-
-		this.sourcePaths.forEach((path, index) => {
-			const sourceFilename = CalsTableView.filenameFromPath(path);
-			vscode.workspace.fs.readFile(path)
-				.then((item) => {
-					console.log('a');
-					this._panel.webview.postMessage({
-						command: 'update',
-						sourceText: new TextDecoder().decode(item),
-						filename: sourceFilename,
-						method: OutputMethod.append
+		const newSourceTexts: string[] = [];
+		if (renewSourceTexts) {
+			this.sourcePaths.forEach((path, index) => {
+				vscode.workspace.fs.readFile(path)
+					.then((item) => {
+						const sourceText = new TextDecoder().decode(item);
+						newSourceTexts.push(sourceText);
 					});
-				});
+			});
+			this.sourceTexts = newSourceTexts;
+		}
+
+		this.postMessageToViewer({
+			command: 'update',
+			sourceText: this.sourceTexts,
+			sourceFilename: this.sourcePaths.map((fullPath) => CalsTableView.filenameFromPath(fullPath)),
+			method: OutputMethod.replace
 		});
 	}
 
