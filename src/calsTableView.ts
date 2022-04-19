@@ -147,6 +147,15 @@ export class CalsTableView {
 					method: OutputMethod.append
 				});
 			}
+		} else {
+			// required to handle where caseonDidChangeViewState does not fire
+			// but may cause two updates
+			this.postMessageToViewer({
+				command: 'update',
+				sourceText: this.sourceTexts,
+				sourceFilename: this.sourcePaths.map((fullPath) => CalsTableView.filenameFromPath(fullPath)),
+				method: OutputMethod.replace
+			});
 		}
 	}
 

@@ -9,6 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
+		console.log('onDidChangeEditor: ' + !!editor);
 		if (calsTableView) {
 			calsTableView.updateViewSource(editor);
 		}
