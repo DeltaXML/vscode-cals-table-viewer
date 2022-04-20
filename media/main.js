@@ -5,7 +5,6 @@ const init = () => {
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', async event => {
         const message = event.data; // The json data that the extension sent
-        console.log('eventData ', event.data);
         switch (message.command) {
             case 'update':
                 // @ts-ignore
@@ -20,7 +19,6 @@ const update = async (
     saxonProcessor, 
     /** @type {{ sef: string; sourceText: string; sourceFilename: string; method: string }} */
     txData) => {
-    console.log(saxonProcessor.getProcessorInfo().productName);
     try {
         await saxonProcessor.transform({
             stylesheetLocation: txData.sef,

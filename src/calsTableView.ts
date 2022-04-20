@@ -98,7 +98,6 @@ export class CalsTableView {
 		this._panel.onDidChangeViewState(
 			e => {
 				if (this._panel.visible && this.initialized) {
-					console.log('onDidChangeViewState');
 					const renew = false;
 					this.updateAll(renew);
 				}
@@ -116,7 +115,6 @@ export class CalsTableView {
 				? vscode.ViewColumn.Beside
 				: undefined;
 			CalsTableView.currentPanel._panel.reveal(column);
-			console.log('refreshView');
 			const renew = true;
 			this.updateAll(renew);
 			return true;
@@ -131,7 +129,6 @@ export class CalsTableView {
 
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor) {
-			console.log('updateViewSource ');
 			const fullPath = editor.document.uri;
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
@@ -147,21 +144,10 @@ export class CalsTableView {
 					method: OutputMethod.append
 				});
 			}
-		} else {
-			// required to handle where caseonDidChangeViewState does not fire
-			// but may cause two updates
-			this.postMessageToViewer({
-				command: 'update',
-				sourceText: this.sourceTexts,
-				sourceFilename: this.sourcePaths.map((fullPath) => CalsTableView.filenameFromPath(fullPath)),
-				method: OutputMethod.replace
-			});
 		}
 	}
 
 	private async updateAll(renewSourceTexts: boolean) {
-		console.log('updateAll renew: ' + renewSourceTexts);
-
 		const newSourceTexts: string[] = [];
 		if (renewSourceTexts) {
 			for (let index = 0; index < this.sourcePaths.length; index++) {

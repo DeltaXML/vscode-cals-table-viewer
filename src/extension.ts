@@ -9,7 +9,6 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
-		console.log('onDidChangeEditor: ' + !!editor);
 		if (calsTableView) {
 			calsTableView.updateViewSource(editor);
 		}
@@ -19,7 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
 		// Make sure we register a serializer in activation event
 		vscode.window.registerWebviewPanelSerializer(CalsTableView.viewType, {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
-				console.log(`Got state: ${state}`);
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
 				CalsTableView.revive(webviewPanel, context.extensionUri);
