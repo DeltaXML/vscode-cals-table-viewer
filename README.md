@@ -14,13 +14,19 @@ The viewer also highlights differences in the tables identified by DeltaXML's De
 - A VS Code message displays any CALS table processing errors
 
 ## Getting Started
-1. Launch VS Code and install the `vsix` extension
+1. Launch VS Code and install the `CALS Table Viewer` extension
 2. In VS Code, open an XML file containing CALS tables
 3. From the Command Palette (**⇧⌘P**), invoke `CALS viewer: Open`
 	- A **CALS Table Viewer** Pane is shown alongside the current view
 	- CALS tables found in the file are rendered with basic styling
 4. Open further XML files to append to the current view
 	- Each file view in the pane is identified by a header with the filename
+
+## More Details
+
+- Initially renders the content of the current editor 
+- Updates the view from file contents when the `CALS viewer: Open` command is invoked again
+- The 'CALS View' is reset by closing it and then invoking the `CALS viewer: Open` command again
 
 ---
 
@@ -53,9 +59,10 @@ SaxonJS uses a compiled form of XSLT. To generate this from the `style-tables.xs
 
 ### 3. Technical Detail
 
-This extension uses the VS Code [WebView API](https://code.visualstudio.com/api/extension-guides/webview) to render the CALS tables.
+**Coding and Security**
 
-An HTML content security policy is used to ensure scripts can only access file system resources that are listed. 
+- This extension uses the VS Code [WebView API](https://code.visualstudio.com/api/extension-guides/webview) to render the CALS tables.
+- An HTML content security policy is used to ensure scripts can only access file system resources that are explicitly listed. 
 
 **WebView Messages**
 
