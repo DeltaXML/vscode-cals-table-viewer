@@ -17,19 +17,25 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:calsViewer.open",
-    "onCommand:calsViewer.openDirectory"
+    "onCommand:cals-table-viewer.open",
+    "onCommand:cals-table-viewer.openSingle",
+    "onCommand:cals-table-viewer.openDirectory"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "calsViewer.open",
-        "title": "Open file",
+        "command": "cals-table-viewer.open",
+        "title": "Open file (single)",
         "category": "CALS Viewer"
       },
       {
-        "command": "calsViewer.openDirectory",
+        "command": "cals-table-viewer.openSingle",
+        "title": "Open file (single)",
+        "category": "CALS Viewer"
+      },
+      {
+        "command": "cals-table-viewer.openDirectory",
         "title": "Open directory",
         "category": "CALS Viewer"
       }

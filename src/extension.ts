@@ -2,18 +2,18 @@ import * as vscode from 'vscode';
 import { CalsTableView, UpdateViewType } from './calsTableView';
 
 
-export async function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
 	let calsTableView: CalsTableView | undefined;
-	const registeredCommands = await vscode.commands.getCommands(true);
 
-	// if (registeredCommands.includes('calsViewer.open')) {
-	// 	return;
-	// }
+
 	context.subscriptions.push(
-		vscode.commands.registerCommand('calsViewer.open', () => {
+		vscode.commands.registerCommand('cals-table-viewer.open', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri, UpdateViewType.fileAppend);
 		}),
-		vscode.commands.registerCommand('calsViewer.openDirectory', () => {
+		vscode.commands.registerCommand('cals-table-viewer.openSingle', () => {
+			calsTableView = CalsTableView.createOrShow(context.extensionUri, UpdateViewType.fileReplace);
+		}),
+		vscode.commands.registerCommand('cals-table-viewer.openDirectory', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri, UpdateViewType.directory);
 		}),
 		vscode.window.onDidChangeActiveTextEditor(editor => {
