@@ -1,21 +1,27 @@
 import * as vscode from 'vscode';
 import { CalsTableView, UpdateViewType } from './calsTableView';
 
-export function activate(context: vscode.ExtensionContext) {
+
+export async function activate(context: vscode.ExtensionContext) {
 	let calsTableView: CalsTableView | undefined;
+	const registeredCommands = await vscode.commands.getCommands(true);
+
+	// if (registeredCommands.includes('calsViewer.open')) {
+	// 	return;
+	// }
 	context.subscriptions.push(
 		vscode.commands.registerCommand('calsViewer.open', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri, UpdateViewType.fileAppend);
 		}),
 		vscode.commands.registerCommand('calsViewer.openDirectory', () => {
 			calsTableView = CalsTableView.createOrShow(context.extensionUri, UpdateViewType.directory);
+		}),
+		vscode.window.onDidChangeActiveTextEditor(editor => {
+			if (calsTableView) {
+				calsTableView.updateViewSource(editor);
+			}
 		})
 	);
-	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
-		if (calsTableView) {
-			calsTableView.updateViewSource(editor);
-		}
-	}));
 
 	if (vscode.window.registerWebviewPanelSerializer) {
 		// Make sure we register a serializer in activation event

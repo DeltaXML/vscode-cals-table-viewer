@@ -18,21 +18,20 @@
   ],
   "activationEvents": [
     "onCommand:calsViewer.open",
-    "onCommand:calsViewer.openDirectory",
-    "onWebviewPanel:calsViewer"
+    "onCommand:calsViewer.openDirectory"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "calsViewer.open",
-        "title": "Open",
+        "title": "Open file",
         "category": "CALS Viewer"
       },
       {
         "command": "calsViewer.openDirectory",
-        "title": "Open",
-        "category": "CALS Directory Viewer"
+        "title": "Open directory",
+        "category": "CALS Viewer"
       }
     ]
   },
