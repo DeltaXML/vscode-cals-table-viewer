@@ -3,8 +3,10 @@
   xmlns:ixsl="http://saxonica.com/ns/interactiveXSLT"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:err="http://www.w3.org/2005/xqt-errors"
   exclude-result-prefixes="xs"
   extension-element-prefixes="ixsl"
+  expand-text="yes"
   version="3.0"
   >
   
@@ -36,8 +38,8 @@
         <xsl:result-document href="#main" method="ixsl:replace-content">
           <xsl:for-each select="1 to count($sourceFilename)">
             <xsl:variable name="index" as="xs:integer" select="."/>  
-            <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>            
-            <xsl:apply-templates select="parse-xml($sourceText[$index])/*"/>
+            <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>
+            <xsl:call-template name="applyToFile"/>
             <hr class="headerText"/>
           </xsl:for-each>
         </xsl:result-document>
@@ -47,7 +49,7 @@
           <xsl:variable name="index" as="xs:integer" select="."/>  
           <xsl:result-document href="#main" method="ixsl:append-content">
             <p class="headerText"><xsl:value-of select="$sourceFilename[$index]"/></p>            
-            <xsl:apply-templates select="parse-xml($sourceText[$index])/*"/>
+            <xsl:call-template name="applyToFile"/>
             <hr class="headerText"/>
           </xsl:result-document>
         </xsl:for-each>
@@ -56,6 +58,24 @@
         </ixsl:schedule-action>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="applyToFile">
+    <xsl:variable name="index" as="xs:integer" select="."/>
+    <xsl:variable name="content" as="xs:string" select="$sourceText[$index]"/>
+    <xsl:try>
+      <xsl:apply-templates select="parse-xml($content)/*"/>
+      <xsl:catch>
+        <xsl:choose>
+          <xsl:when test="starts-with($content, '<')">
+            <p>[XML Parse Error: {$err:description}]</p>
+          </xsl:when>
+          <xsl:otherwise>
+            <p>[Non XML File]</p>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:catch>
+    </xsl:try>
   </xsl:template>
   
   <xsl:template name="scrollToEnd">
