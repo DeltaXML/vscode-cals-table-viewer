@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'url';
 import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
 
@@ -14,6 +15,12 @@ interface ViewerMessage {
 	method: OutputMethod
 }
 
+export enum UpdateViewType {
+	fileAppend,
+	fileReplace,
+	directory
+}
+
 export class CalsTableView {
 	/**
 	 * Track the current panel. Only allow a single panel to exist at a time.
@@ -22,16 +29,19 @@ export class CalsTableView {
 	public static currentPanel: CalsTableView | undefined;
 
 	public static readonly viewType = 'calsViewer';
-	private static readonly viewerTitle = 'CALS Table Viewer'
+	private static readonly viewerTitle = 'CALS Table Viewer';
+	private static readonly macosStore = '.DS_Store';
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
+	private static updateViewType: UpdateViewType;
 	private initialized = false;
 	private _disposables: vscode.Disposable[] = [];
 	private sourcePaths: vscode.Uri[] = [];
 	private sourceTexts: string[] = [];
 	private sefURI = '';
 
-	public static createOrShow(extensionUri: vscode.Uri) {
+	public static createOrShow(extensionUri: vscode.Uri, updateViewType: UpdateViewType) {
+		CalsTableView.updateViewType = updateViewType;
 		const activeEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 		const column = activeEditor
 			? vscode.ViewColumn.Beside
@@ -51,7 +61,7 @@ export class CalsTableView {
 			CalsTableView.getWebviewOptions(extensionUri),
 		);
 
-		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor);
+		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor, );
 		return CalsTableView.currentPanel;
 	}
 
@@ -92,7 +102,17 @@ export class CalsTableView {
 			null,
 			this._disposables
 		);
-		this.updateViewSource(activeEditor);
+
+		switch (CalsTableView.updateViewType) {
+			case UpdateViewType.fileAppend:
+				this.updateViewSource(activeEditor);
+				break;
+			case UpdateViewType.directory:
+				if (activeEditor) {
+					this.updateDirectorySourcePaths(activeEditor);
+				}
+				break;
+		}
 
 		// Update the content based on view changes
 		this._panel.onDidChangeViewState(
@@ -128,7 +148,7 @@ export class CalsTableView {
 	}
 
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
-		if (editor) {
+		if (editor && CalsTableView.updateViewType !== UpdateViewType.directory) {
 			const fullPath = editor.document.uri;
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
@@ -188,6 +208,28 @@ export class CalsTableView {
 			text += possible.charAt(Math.floor(Math.random() * possible.length));
 		}
 		return text;
+	}
+
+	private async updateDirectorySourcePaths(activeEditor: vscode.TextEditor) {
+		const uri = activeEditor.document.uri;
+		const uriPath = uri.path;
+		const pos = uriPath.lastIndexOf('/');
+		if (pos > -1) {
+			const directoryPath = uriPath.substring(0, pos);
+			const directoryUri = uri.with({ path: directoryPath });
+			const fileDataPairs = await vscode.workspace.fs.readDirectory(directoryUri);
+			const fileUris: vscode.Uri[] = [];
+			fileDataPairs.forEach((pair) => {
+				const [fileName, fileType] = pair;
+				if (fileType === vscode.FileType.File && fileName !== CalsTableView.macosStore) {
+					const fileUri = directoryUri.with({ path: directoryPath + '/' + fileName });
+					fileUris.push(fileUri);
+				}
+			});
+			this.sourcePaths = fileUris;
+			const renewSourceTexts = true;
+			this.updateAll(renewSourceTexts);
+		}
 	}
 
 	private static getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
