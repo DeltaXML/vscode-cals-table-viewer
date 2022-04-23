@@ -43,7 +43,6 @@ export class CalsTableView {
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri, updateViewType: UpdateViewType) {
-		CalsTableView.updateViewType = updateViewType;
 		const activeEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 		const column = activeEditor
 			? vscode.ViewColumn.Beside
@@ -54,6 +53,7 @@ export class CalsTableView {
 			this.currentPanel.refreshView();
 			return;
 		}
+		CalsTableView.updateViewType = updateViewType;
 
 		// Otherwise, create a new panel.
 		const panel = vscode.window.createWebviewPanel(
@@ -62,7 +62,6 @@ export class CalsTableView {
 			{ viewColumn: column || vscode.ViewColumn.One, preserveFocus: true },
 			CalsTableView.getWebviewOptions(extensionUri),
 		);
-
 		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor, );
 		return CalsTableView.currentPanel;
 	}
@@ -107,6 +106,7 @@ export class CalsTableView {
 
 		switch (CalsTableView.updateViewType) {
 			case UpdateViewType.fileAppend:
+			case UpdateViewType.fileReplace:
 				this.updateViewSource(activeEditor);
 				break;
 			case UpdateViewType.directory:
@@ -152,6 +152,9 @@ export class CalsTableView {
 	public updateViewSource(editor: vscode.TextEditor | undefined) {
 		if (editor && CalsTableView.updateViewType !== UpdateViewType.directory) {
 			const fullPath = editor.document.uri;
+			const outputMethod = CalsTableView.updateViewType === UpdateViewType.fileAppend ?
+				OutputMethod.append :
+				OutputMethod.replace;
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
 				this.sourcePaths.push(fullPath);
@@ -163,7 +166,7 @@ export class CalsTableView {
 					command: 'update',
 					sourceText: [sourceText],
 					sourceFilename: [sourceFilename],
-					method: OutputMethod.append
+					method: outputMethod
 				});
 			}
 		}
