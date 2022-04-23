@@ -21,6 +21,8 @@ export enum UpdateViewType {
 	directory
 }
 
+type FileDescriptor = [string, vscode.FileType];
+
 export class CalsTableView {
 	/**
 	 * Track the current panel. Only allow a single panel to exist at a time.
@@ -217,7 +219,8 @@ export class CalsTableView {
 		if (pos > -1) {
 			const directoryPath = uriPath.substring(0, pos);
 			const directoryUri = uri.with({ path: directoryPath });
-			const fileDataPairs = await vscode.workspace.fs.readDirectory(directoryUri);
+			const unsortedFileDataPairs: FileDescriptor[] = await vscode.workspace.fs.readDirectory(directoryUri);
+			const fileDataPairs = unsortedFileDataPairs.sort(CalsTableView.sortFiles);
 			const fileUris: vscode.Uri[] = [];
 			fileDataPairs.forEach((pair) => {
 				const [fileName, fileType] = pair;
@@ -230,6 +233,12 @@ export class CalsTableView {
 			const renewSourceTexts = true;
 			this.updateAll(renewSourceTexts);
 		}
+	}
+
+	private static sortFiles = (a: FileDescriptor, b: FileDescriptor) => {
+		const [nameA, typeA] = a;
+		const [nameB, typeB] = b;
+		return nameA.localeCompare(nameB, 'en', { numeric: true});
 	}
 
 	private static getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
