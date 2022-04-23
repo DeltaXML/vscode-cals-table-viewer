@@ -50,19 +50,23 @@ export class CalsTableView {
 
 		// If we already have a panel, show it.
 		if (this.currentPanel) {
+			if (CalsTableView.updateViewType !== updateViewType) {
+				this.currentPanel.clearFileHistory();
+			}
+			CalsTableView.updateViewType = updateViewType;
 			this.currentPanel.refreshView();
-			return;
+		} else {
+			// Otherwise, create a new panel.
+			CalsTableView.updateViewType = updateViewType;
+			const panel = vscode.window.createWebviewPanel(
+				CalsTableView.viewType,
+				CalsTableView.viewerTitle,
+				{ viewColumn: column || vscode.ViewColumn.One, preserveFocus: true },
+				CalsTableView.getWebviewOptions(extensionUri),
+			);
+			CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor,);
 		}
-		CalsTableView.updateViewType = updateViewType;
 
-		// Otherwise, create a new panel.
-		const panel = vscode.window.createWebviewPanel(
-			CalsTableView.viewType,
-			CalsTableView.viewerTitle,
-			{ viewColumn: column || vscode.ViewColumn.One, preserveFocus: true },
-			CalsTableView.getWebviewOptions(extensionUri),
-		);
-		CalsTableView.currentPanel = new CalsTableView(panel, extensionUri, activeEditor, );
 		return CalsTableView.currentPanel;
 	}
 
@@ -75,6 +79,11 @@ export class CalsTableView {
 		const pos = fPath.lastIndexOf('/');
 		const fileName = pos > -1 ? fPath.substring(pos + 1) : fPath;
 		return fileName;
+	}
+
+	public clearFileHistory() {
+		this.sourcePaths = [];
+		this.sourceTexts = [];
 	}
 
 	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, activeEditor?: vscode.TextEditor | undefined) {
@@ -132,11 +141,12 @@ export class CalsTableView {
 
 	public refreshView() {
 		if (CalsTableView.currentPanel) {
+			const preserveFocus = true;
 			const activeEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 			const column = activeEditor
 				? vscode.ViewColumn.Beside
 				: undefined;
-			CalsTableView.currentPanel._panel.reveal(column);
+			CalsTableView.currentPanel._panel.reveal(column, preserveFocus);
 			const renew = true;
 			this.updateAll(renew);
 			return true;
@@ -241,7 +251,7 @@ export class CalsTableView {
 	private static sortFiles = (a: FileDescriptor, b: FileDescriptor) => {
 		const [nameA, typeA] = a;
 		const [nameB, typeB] = b;
-		return nameA.localeCompare(nameB, 'en', { numeric: true});
+		return nameA.localeCompare(nameB, 'en', { numeric: true });
 	}
 
 	private static getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
