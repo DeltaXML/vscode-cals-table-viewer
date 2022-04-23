@@ -26,17 +26,17 @@
     "commands": [
       {
         "command": "cals-table-viewer.open",
-        "title": "Open file (single)",
+        "title": "File (append)",
         "category": "CALS Viewer"
       },
       {
         "command": "cals-table-viewer.openSingle",
-        "title": "Open file (single)",
+        "title": "File (replace)",
         "category": "CALS Viewer"
       },
       {
         "command": "cals-table-viewer.openDirectory",
-        "title": "Open directory",
+        "title": "Directory",
         "category": "CALS Viewer"
       }
     ]
