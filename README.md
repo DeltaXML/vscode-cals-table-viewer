@@ -1,7 +1,7 @@
 # CALS Table Viewer for Visual Studio Code #
 
-The CALS Table Viewer renders CALS tables found in an XML file opened in VS Code. 
-The viewer also highlights differences in the tables identified by DeltaXML's DeltaV2 Markup.
+The CALS Table Viewer extension renders CALS tables found in any XML file (or directory) opened in VS Code. 
+The viewer highlights differences in the tables identified by DeltaXML's [DeltaV2 Markup](https://docs.deltaxml.com/support-and-documentation/2022-03-08/(2022-03-08)-Two-and-Three-Document-DeltaV2-Format.2887811091.html).
 
 ![Screenshot](resources/images/viewer-main.png)
 
@@ -35,13 +35,13 @@ The viewer also highlights differences in the tables identified by DeltaXML's De
 
 Update the `CALS Viewer` by running a CALS Viewer command again. To reset the `File (append)` view, close the current CALS Viewer first.
 
-There is no styling for file content found outside CALS tables.
+If non-XML (or not well-formed) files are opened, a section for the file is added to the view but no file contents is rendered.
 
-
+The focus of the `CALS Viewer' project is just CALS tables and text content. Content found outside CALS tables is not styled.
 
 ## Project Goals
 
-This project started as a DeltaXML 'free-sprint' project. There are two main goals for this project:
+This project started as a (four-day) DeltaXML 'free-sprint' project. There are two main goals for this project:
 
 1. Provide a developer tool to help with analysing results from CALS table processing
 2. Demonstrate how XSLT 3.0 and Saxon JS can be used to enhance data visualisation inside Visual Studio Code.
@@ -79,8 +79,3 @@ The WebView and Visual Studio Code environment communicate in both directions vi
 
 - A message is sent to the WebView when the active editor changes
 - A message is sent from the WebView when an XSLT processing error is enountered
-
----
-## Who do I talk to? ###
-
-* phil.fearon@deltaxml.com
