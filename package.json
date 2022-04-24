@@ -14,8 +14,16 @@
     "vscode": "^1.47.0"
   },
   "categories": [
-    "Other"
+    "Visualization"
   ],
+  "keywords": [
+    "cals",
+    "table",
+		"xml",
+		"xslt",
+		"xsl",
+		"xpath"
+	],
   "activationEvents": [
     "onCommand:cals-table-viewer.open",
     "onCommand:cals-table-viewer.openSingle",
