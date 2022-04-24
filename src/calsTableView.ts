@@ -50,12 +50,12 @@ export class CalsTableView {
 
 		// If we already have a panel, show it.
 		if (this.currentPanel) {
-			if (CalsTableView.updateViewType !== updateViewType) {
+			const reset = CalsTableView.updateViewType !== updateViewType || CalsTableView.updateViewType === UpdateViewType.directory;
+			if (reset) {
 				this.currentPanel.clearFileHistory();
 			}
 			CalsTableView.updateViewType = updateViewType;
 			this.currentPanel.refreshView();
-			const reset = true;
 			if (activeEditor) this.currentPanel.updateForViewType(activeEditor, reset);
 		} else {
 			// Otherwise, create a new panel.

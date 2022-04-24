@@ -16,19 +16,28 @@ The viewer also highlights differences in the tables identified by DeltaXML's De
 ## Getting Started
 1. Launch VS Code and install the `CALS Table Viewer` extension
 2. In VS Code, open an XML file containing CALS tables
-3. From the Command Palette (**⇧⌘P**), invoke `CALS viewer: Open`
+3. From the Command Palette (**⇧⌘P**), invoke `CALS viewer: File (append)`
 	- A **CALS Table Viewer** Pane is shown alongside the current view
 	- CALS tables found in the file are rendered with basic styling
 4. Open further XML files to append to the current view
 	- Each file view in the pane is identified by a header with the filename
 
-## More Details
+## Commands
 
-- Initially renders the content of the current editor 
-- Updates the view from file contents when the `CALS viewer: Open` command is invoked again
-- The 'CALS View' is reset by closing it and then invoking the `CALS viewer: Open` command again
+| Command  | Description |
+| ------- | ------- |
+| `CALS Viewer: File (append)` | Appends new file content to previous file content each time a new file is selected |
+| `CALS Viewer: File (replace)` | Shows the current file content each time a new file is selected |
+| `CALS Viewer: Directory` | Shows the content of all files in the same directory as the currently selected file |
+|||
 
----
+## Behaviour Detail
+
+Update the `CALS Viewer` by running a CALS Viewer command again. To reset the `File (append)` view, close the current CALS Viewer first.
+
+There is no styling for file content found outside CALS tables.
+
+
 
 ## Project Goals
 
