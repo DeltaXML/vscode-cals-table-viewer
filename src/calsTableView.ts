@@ -55,6 +55,8 @@ export class CalsTableView {
 			}
 			CalsTableView.updateViewType = updateViewType;
 			this.currentPanel.refreshView();
+			const reset = true;
+			if (activeEditor) this.currentPanel.updateForViewType(activeEditor, reset);
 		} else {
 			// Otherwise, create a new panel.
 			CalsTableView.updateViewType = updateViewType;
@@ -87,7 +89,6 @@ export class CalsTableView {
 	}
 
 	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, activeEditor?: vscode.TextEditor | undefined) {
-
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 		const stylesSefPath = vscode.Uri.joinPath(this._extensionUri, 'saxon', 'style-tables.sef.json');
@@ -99,6 +100,8 @@ export class CalsTableView {
 		// Listen for when the panel is disposed
 		// This happens when the user closes the panel or when the panel is closed programmatically
 		this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+
+		if (activeEditor) this.updateForViewType(activeEditor);
 
 		// Handle messages from the webview
 		this._panel.webview.onDidReceiveMessage(
@@ -112,18 +115,6 @@ export class CalsTableView {
 			null,
 			this._disposables
 		);
-
-		switch (CalsTableView.updateViewType) {
-			case UpdateViewType.fileAppend:
-			case UpdateViewType.fileReplace:
-				this.updateViewSource(activeEditor);
-				break;
-			case UpdateViewType.directory:
-				if (activeEditor) {
-					this.updateDirectorySourcePaths(activeEditor);
-				}
-				break;
-		}
 
 		// Update the content based on view changes
 		this._panel.onDidChangeViewState(
@@ -139,6 +130,20 @@ export class CalsTableView {
 		);
 	}
 
+	private updateForViewType(activeEditor: vscode.TextEditor, resetView?: boolean) {
+		switch (CalsTableView.updateViewType) {
+			case UpdateViewType.fileAppend:
+			case UpdateViewType.fileReplace:
+				this.updateViewSource(activeEditor, resetView);
+				break;
+			case UpdateViewType.directory:
+				if (activeEditor) {
+					this.updateDirectorySourcePaths(activeEditor);
+				}
+				break;
+		}
+	}
+
 	public refreshView() {
 		if (CalsTableView.currentPanel) {
 			const preserveFocus = true;
@@ -147,8 +152,6 @@ export class CalsTableView {
 				? vscode.ViewColumn.Beside
 				: undefined;
 			CalsTableView.currentPanel._panel.reveal(column, preserveFocus);
-			const renew = true;
-			this.updateAll(renew);
 			return true;
 		} else {
 			return false;
@@ -159,12 +162,15 @@ export class CalsTableView {
 		this._panel.webview.postMessage(message);
 	}
 
-	public updateViewSource(editor: vscode.TextEditor | undefined) {
+	public updateViewSource(editor: vscode.TextEditor | undefined, reset?: boolean) {
 		if (editor && CalsTableView.updateViewType !== UpdateViewType.directory) {
 			const fullPath = editor.document.uri;
-			const outputMethod = CalsTableView.updateViewType === UpdateViewType.fileAppend ?
+			let outputMethod = CalsTableView.updateViewType === UpdateViewType.fileAppend ?
 				OutputMethod.append :
 				OutputMethod.replace;
+			if (reset) {
+				outputMethod = OutputMethod.replace;
+			}
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
 				this.sourcePaths.push(fullPath);
