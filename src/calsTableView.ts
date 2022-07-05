@@ -40,7 +40,7 @@ export class CalsTableView {
 	private _disposables: vscode.Disposable[] = [];
 	private sourcePaths: vscode.Uri[] = [];
 	private sourceTexts: string[] = [];
-	private fsw: vscode.FileSystemWatcher | null = null;
+	private fsw: vscode.FileSystemWatcher[] = [];
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri, updateViewType: UpdateViewType) {
@@ -84,24 +84,17 @@ export class CalsTableView {
 		return fileName;
 	}
 
-	private async watchUri(uri: vscode.Uri) {
-		const uriPath = uri.path;
-		const pos = uriPath.lastIndexOf('/');
-		if (pos > -1) {
-			const directoryPath = uriPath.substring(0, pos);
-			const filename = uriPath.substring(pos + 1);
-			const directoryUri = uri.with({ path: directoryPath });
-			const rp = new vscode.RelativePattern(directoryUri.fsPath, filename);
-			this.fsw = vscode.workspace.createFileSystemWatcher(rp);
-			this.fsw.onDidChange((e: vscode.Uri) => {
-				console.log('changed ' + e.fsPath);
-				const renewSourceTexts = true;
-				this.updateAll(renewSourceTexts);
-				// vscode.workspace.fs.readFile(e).then((result) => {
-				// 	const newText = result.toString();
-				// });
-				});
-		}
+	private async watchUri() {
+		const changeHandler = (e: vscode.Uri) => {
+			const renewSourceTexts = true;
+			this.updateAll(renewSourceTexts);
+			};
+		this.fsw.forEach((watcher) => watcher.dispose());
+		this.fsw = this.sourcePaths.map((uri) => {
+			const watcher = vscode.workspace.createFileSystemWatcher(uri.path);
+			watcher.onDidChange(changeHandler);
+			return watcher;
+		});
 	}
 
 	public clearFileHistory() {
@@ -151,20 +144,19 @@ export class CalsTableView {
 		);
 	}
 
-	private updateForViewType(activeEditor: vscode.TextEditor, resetView?: boolean) {
+	private async updateForViewType(activeEditor: vscode.TextEditor, resetView?: boolean) {
 		switch (CalsTableView.updateViewType) {
 			case UpdateViewType.fileReplace:
-				this.watchUri(activeEditor.document.uri);
-			// eslint-disable-next-line no-fallthrough
 			case UpdateViewType.fileAppend:
 				this.updateViewSource(activeEditor, resetView);
 				break;
 			case UpdateViewType.directory:
 				if (activeEditor) {
-					this.updateDirectorySourcePaths(activeEditor);
+					await this.updateDirectorySourcePaths(activeEditor);
 				}
 				break;
 		}
+		this.watchUri();
 	}
 
 	public refreshView() {
@@ -200,6 +192,7 @@ export class CalsTableView {
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
 				this.sourcePaths.push(fullPath);
+				this.watchUri();
 				const sourceText = editor.document.getText();
 				this.sourceTexts.push(sourceText);
 				const sourceFilename = CalsTableView.filenameFromPath(fullPath);
