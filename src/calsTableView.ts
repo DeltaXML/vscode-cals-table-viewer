@@ -194,6 +194,9 @@ export class CalsTableView {
 			if (reset) {
 				outputMethod = OutputMethod.replace;
 			}
+			if (CalsTableView.updateViewType === UpdateViewType.fileReplace) {
+				this.clearFileHistory();
+			}
 			// append content if new file path is not the same as the last path:
 			if (this.sourcePaths.length === 0 || this.sourcePaths[this.sourcePaths.length - 1].fsPath !== fullPath.fsPath) {
 				this.sourcePaths.push(fullPath);

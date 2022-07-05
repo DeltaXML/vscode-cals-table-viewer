@@ -2,20 +2,28 @@
   "name": "cals-table-viewer",
   "displayName": "CALS Table Viewer",
   "description": "Render CALS tables found in the current file",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "deltaxml",
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/vscode-extension-samples"
+    "url": "https://github.com/DeltaXML/vscode-cals-table-viewer"
   },
   "engines": {
     "vscode": "^1.47.0"
   },
   "categories": [
-    "Other"
+    "Visualization"
   ],
+  "keywords": [
+    "cals",
+    "table",
+		"xml",
+		"xslt",
+		"xsl",
+		"xpath"
+	],
   "activationEvents": [
     "onCommand:cals-table-viewer.open",
     "onCommand:cals-table-viewer.openSingle",

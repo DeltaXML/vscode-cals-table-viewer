@@ -10,7 +10,7 @@ The viewer highlights differences in the tables identified by DeltaXML's [DeltaV
 - Visually verify the validity of CALS tables
 - See differences in CALS table content
 - Infer differences in CALS table structure
-- Understand the effect of different DeltaXML copmparison settings
+- Understand the effect of different DeltaXML comparison settings
 - A VS Code message displays any CALS table processing errors
 
 ## Getting Started
