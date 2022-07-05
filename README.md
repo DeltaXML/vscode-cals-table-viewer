@@ -11,6 +11,7 @@ The viewer highlights differences in the tables identified by DeltaXML's [DeltaV
 - See differences in CALS table content
 - Infer differences in CALS table structure
 - Understand the effect of different DeltaXML comparison settings
+- With the file-watcher, continuously track the state of one or more CALS tables files
 - A VS Code message displays any CALS table processing errors
 
 ## Getting Started
@@ -33,11 +34,13 @@ The viewer highlights differences in the tables identified by DeltaXML's [DeltaV
 
 ## Behaviour Detail
 
-Update the `CALS Viewer` by running a CALS Viewer command again. To reset the `File (append)` view, close the current CALS Viewer first.
+Change the `CALS Viewer` type by running a different CALS Viewer command. To reset the `File (append)` view, close the current CALS Viewer first.
+
+The CALS Viewer updates the view each time any of the underlying files is updated.
 
 If non-XML (or not well-formed) files are opened, a section for the file is added to the view but no file contents is rendered.
 
-The focus of the `CALS Viewer' project is just CALS tables and text content. Content found outside CALS tables is not styled.
+*Note: the focus of the `CALS Viewer' project is just CALS tables and text content. Content found outside CALS tables is not styled.*
 
 ## Project Goals
 
