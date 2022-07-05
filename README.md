@@ -1,6 +1,6 @@
 # CALS Table Viewer for Visual Studio Code #
 
-The CALS Table Viewer extension renders CALS tables found in any XML file (or directory) opened in VS Code. 
+A dedicated file viewer that renders CALS tables found in any XML file (or directory) opened in VS Code. 
 The viewer highlights differences in the tables identified by DeltaXML's [DeltaV2 Markup](https://docs.deltaxml.com/support-and-documentation/2022-03-08/(2022-03-08)-Two-and-Three-Document-DeltaV2-Format.2887811091.html).
 
 ![Screenshot](resources/images/viewer-main.png)
