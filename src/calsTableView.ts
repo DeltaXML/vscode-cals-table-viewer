@@ -40,6 +40,7 @@ export class CalsTableView {
 	private _disposables: vscode.Disposable[] = [];
 	private sourcePaths: vscode.Uri[] = [];
 	private sourceTexts: string[] = [];
+	private fsw: vscode.FileSystemWatcher | null = null;
 	private sefURI = '';
 
 	public static createOrShow(extensionUri: vscode.Uri, updateViewType: UpdateViewType) {
@@ -81,6 +82,26 @@ export class CalsTableView {
 		const pos = fPath.lastIndexOf('/');
 		const fileName = pos > -1 ? fPath.substring(pos + 1) : fPath;
 		return fileName;
+	}
+
+	private async watchUri(uri: vscode.Uri) {
+		const uriPath = uri.path;
+		const pos = uriPath.lastIndexOf('/');
+		if (pos > -1) {
+			const directoryPath = uriPath.substring(0, pos);
+			const filename = uriPath.substring(pos + 1);
+			const directoryUri = uri.with({ path: directoryPath });
+			const rp = new vscode.RelativePattern(directoryUri.fsPath, filename);
+			this.fsw = vscode.workspace.createFileSystemWatcher(rp);
+			this.fsw.onDidChange((e: vscode.Uri) => {
+				console.log('changed ' + e.fsPath);
+				const renewSourceTexts = true;
+				this.updateAll(renewSourceTexts);
+				// vscode.workspace.fs.readFile(e).then((result) => {
+				// 	const newText = result.toString();
+				// });
+				});
+		}
 	}
 
 	public clearFileHistory() {
@@ -132,8 +153,10 @@ export class CalsTableView {
 
 	private updateForViewType(activeEditor: vscode.TextEditor, resetView?: boolean) {
 		switch (CalsTableView.updateViewType) {
-			case UpdateViewType.fileAppend:
 			case UpdateViewType.fileReplace:
+				this.watchUri(activeEditor.document.uri);
+			// eslint-disable-next-line no-fallthrough
+			case UpdateViewType.fileAppend:
 				this.updateViewSource(activeEditor, resetView);
 				break;
 			case UpdateViewType.directory:
