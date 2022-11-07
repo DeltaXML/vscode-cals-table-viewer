@@ -169,6 +169,7 @@
   <xsl:template match="@colname|@frame|@rowsep|@colsep" mode="#all"/>
   
   <xsl:template match="*:colspec" mode="#all"/>
+  <xsl:template match="@class" mode="#all"/>
   
   <xsl:function name="deltaxml:calcColspan" as="xs:integer">
     <xsl:param name="elem" as="element()"/> <!-- an entry, entrytbl or spanspec -->
