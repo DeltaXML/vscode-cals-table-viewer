@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:deltaxml="http://www.deltaxml.com/ns/well-formed-delta-v1" xmlns:dxx="http://www.deltaxml.com/ns/xml-namespaced-attribute" xmlns:dxa="http://www.deltaxml.com/ns/non-namespaced-attribute" deltaxml:deltaV2="A!=B" version="5.1" deltaxml:content-type="full-context" deltaxml:version="2.1">
+	<info deltaxml:deltaV2="A=B">
+		<title>Cell Renaming</title>
+	</info>
+	<para deltaxml:deltaV2="A!=B">
+		<informaltable deltaxml:deltaV2="A!=B" frame="all">
+			<tgroup cols="4" deltaxml:deltaV2="A!=B">
+				<colspec deltaxml:deltaV2="A=B" colname="1"/>
+				<colspec deltaxml:deltaV2="A=B" colname="2"/>
+				<colspec deltaxml:deltaV2="A=B" colname="3"/>
+				<colspec deltaxml:deltaV2="A=B" colname="4"/>
+				<tbody deltaxml:deltaV2="A!=B">
+					<row deltaxml:deltaV2="A=B">
+						<entry colname="1">Column 1 Row 1</entry>
+						<entry colname="2">Column 2 Row 1</entry>
+						<entry colname="3">Column 3 Row 1</entry>
+						<entry colname="4">Column 4 Row 1</entry>
+					</row>
+					<row deltaxml:deltaV2="A!=B">
+						<entrytbl deltaxml:deltaV2="B" namest="1" nameend="3" cols="2">
+							<tbody>
+								<row>
+									<entry>Inner Table 1: Column 1 Row 1</entry>
+									<entry>Inner Table 1: Column 2 Row 1</entry>
+								</row>
+								<row>
+									<entry>Inner Table 1: Column 1 Row 2</entry>
+									<entry>Inner Table 1: Column 2 Row 2</entry>
+								</row>
+							</tbody>
+						</entrytbl>
+						<entry deltaxml:deltaV2="A=B" colname="4">Column 4 Row 2</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</para>
+</article>

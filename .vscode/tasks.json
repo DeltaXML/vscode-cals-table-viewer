@@ -30,6 +30,19 @@
 			"problemMatcher": [
 				"$saxon-xslt-js"
 			]
+		},
+		{
+			"type": "xslt-js",
+			"label": "Run style-tables.xsl",
+			"xsltFile": "${workspaceFolder}/resources/xslt-src/style-tables.xsl",
+			"xmlSource": "${command:xslt-xpath.pickXmlSourceFile}",        // can select from current file or recently used stage1 source files
+			"resultPath": "${workspaceFolder}/xslt-out/result1.html",
+			"group": {
+				"kind": "build"
+			},
+			"problemMatcher": [
+				"$saxon-xslt-js"
+			]
 		}
 	]
 }

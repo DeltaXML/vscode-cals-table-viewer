@@ -78,7 +78,7 @@
     </td>
   </xsl:template>
   
-  <xsl:template match="*:entry[(exists(@nameend) and exists(@namest)) or exists(@spanname)][$showSpans]" mode="#all">
+  <xsl:template match="(*:entry|*:entrytbl)[(exists(@nameend) and exists(@namest)) or exists(@spanname)][$showSpans]" mode="#all">
     <td>
       <xsl:apply-templates select="@*" mode="#current"/>
       <xsl:variable name="sppanInfoElement" as="element()" select="if (exists(@spanname)) then cte:spanSpecFromName(@spanname) else ."/>      
