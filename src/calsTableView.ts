@@ -298,8 +298,8 @@ export class CalsTableView {
 		const scriptSaxonPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'saxon', 'SaxonJS2.rt.js');
 
 		// And the uri we use to load this script in the webview
-		const scriptUri = (scriptPathOnDisk).with({ 'scheme': 'vscode-resource' });
-		const scriptSaxonUri = (scriptSaxonPathOnDisk).with({ 'scheme': 'vscode-resource' });
+		const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
+		const scriptSaxonUri = webview.asWebviewUri(scriptSaxonPathOnDisk);
 
 		// Local path to css styles
 		const styleResetPath = vscode.Uri.joinPath(this._extensionUri, 'media', 'reset.css');
