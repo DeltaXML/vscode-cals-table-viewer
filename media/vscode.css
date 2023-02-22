@@ -110,6 +110,15 @@ tbody {
     background-color: white;
 }
 
+tbody:not(:first-of-type):before
+{
+    content: '';
+    display: table-row;
+    height: 3px;
+    background-color: white;
+    width: 100%;
+}
+
 caption {
     padding: 10px;
     caption-side: top;

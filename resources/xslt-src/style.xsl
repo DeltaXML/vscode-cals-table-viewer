@@ -49,8 +49,8 @@
   
   <xsl:template match="*:tbody|*:thead|*:tfoot" mode="#all">
     <xsl:element name="{local-name(.)}">
-      <xsl:apply-templates select="parent::tgroup/@*" mode="#current"/>
       <xsl:apply-templates select="@deltaxml:deltaV2"/>
+      <xsl:apply-templates select="parent::tgroup/@*" mode="#current"/>
       <xsl:apply-templates mode="#current"/>
     </xsl:element>
   </xsl:template>
