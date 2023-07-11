@@ -166,6 +166,10 @@
     <xsl:attribute name="data-missing-cell" select="."/>
   </xsl:template>
   
+  <xsl:template match="@deltaxml:span-extent-changed" mode="#all">
+    <xsl:attribute name="data-span-extent-changed" select="."/>
+  </xsl:template>
+  
   <xsl:template match="@colname|@frame|@rowsep|@colsep" mode="#all"/>
   
   <xsl:template match="*:colspec" mode="#all"/>

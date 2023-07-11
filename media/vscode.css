@@ -192,6 +192,12 @@ table {
 *[data-missing-cell=true] {
   background-color: darkgrey;
 }
+*[data-span-extent-changed=true] {
+  border-color: rgb(166, 62, 62);
+  border-width: 2px;
+  border-style: solid;
+  box-shadow: #505050;
+}
 
 thead.deltaV2B,
 thead td.deltaV2B,
