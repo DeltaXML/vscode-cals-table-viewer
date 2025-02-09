@@ -12,6 +12,7 @@ The viewer highlights differences in the tables identified by DeltaXignia's [Del
 - Visually verify the validity of CALS tables
 - See differences in CALS table content
 - Infer differences in CALS table structure
+- Red border for table cells with different column or row spans
 - Understand the effect of different DeltaXignia comparison settings
 - With the file-watcher, continuously track the state of one or more CALS tables files
 - A VS Code message displays any CALS table processing errors
