@@ -1,3 +1,5 @@
+<img src="deltaxigniaLogoSmall.png">
+
 # CALS Table Viewer for Visual Studio Code #
 
 A dedicated file viewer that renders CALS tables found in any XML file (or directory) opened in VS Code. 
