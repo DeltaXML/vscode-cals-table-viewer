@@ -2,8 +2,9 @@
   "name": "cals-table-viewer",
   "displayName": "CALS Table Viewer",
   "description": "Render CALS tables found in the current file",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "publisher": "deltaxml",
+  "icon": "cals-table-viewer-logo.jpg",
   "private": true,
   "license": "MIT",
   "repository": {
