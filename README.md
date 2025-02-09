@@ -1,7 +1,7 @@
 # CALS Table Viewer for Visual Studio Code #
 
 A dedicated file viewer that renders CALS tables found in any XML file (or directory) opened in VS Code. 
-The viewer highlights differences in the tables identified by DeltaXML's [DeltaV2 Markup](https://docs.deltaxml.com/support-and-documentation/2022-03-08/(2022-03-08)-Two-and-Three-Document-DeltaV2-Format.2887811091.html).
+The viewer highlights differences in the tables identified by DeltaXignia's [DeltaV2 Markup](https://docs.deltaxml.com/support-and-documentation/2022-03-08/(2022-03-08)-Two-and-Three-Document-DeltaV2-Format.2887811091.html).
 
 ![Screenshot](resources/images/viewer-main.png)
 
@@ -10,7 +10,7 @@ The viewer highlights differences in the tables identified by DeltaXML's [DeltaV
 - Visually verify the validity of CALS tables
 - See differences in CALS table content
 - Infer differences in CALS table structure
-- Understand the effect of different DeltaXML comparison settings
+- Understand the effect of different DeltaXignia comparison settings
 - With the file-watcher, continuously track the state of one or more CALS tables files
 - A VS Code message displays any CALS table processing errors
 
@@ -44,7 +44,7 @@ If non-XML (or not well-formed) files are opened, a section for the file is adde
 
 ## Project Goals
 
-This project started as a (four-day) DeltaXML 'free-sprint' project. There are two main goals for this project:
+This project started as a (four-day) DeltaXignia 'free-sprint' project. There are two main goals for this project:
 
 1. Provide a developer tool to help with analysing results from CALS table processing
 2. Demonstrate how XSLT 3.0 and Saxon JS can be used to enhance data visualisation inside Visual Studio Code.
